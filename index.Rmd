@@ -2,7 +2,7 @@
 title       : Introduction to R and RStudio
 subtitle    : 
 author      : Ian Lyttle
-job         : 
+job         : Analytics for Solutions, Schneider Electric
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
@@ -10,6 +10,8 @@ widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
+
+---
 ## Installation
 
 You will need to install:
@@ -28,7 +30,6 @@ Some helpful videos:
 * [Installing RStudio](http://youtu.be/AZPbg29Plpw)
 
 --- &my_twocol  w1:33% w2:65%
-
 ## Tour of RStudio IDE
 
 *** =left
@@ -46,20 +47,19 @@ Some helpful videos:
  <img src="figure/rstudio-windows.png", width="100%"/>
 
 ---
-
 ## Packages
 
 User-contributed packages are a big part of R's success.
 
 Here's a subjective list of "essential" packages to be installed:
 
-|               |               |  
-| ------------- | ------------- | 
-| `plyr`        | data transformation | 
-| `reshape2`    | data transformation |   
-| `ggplot2`     | visualization      |   
-| `stringr`     | work with strings   |
-| `lubridate`   | work with date-times    |
+|               |                      |         |
+| ------------- | -------------------- | ------- |
+| `plyr`        | data transformation  | [Website](http://plyr.had.co.nz/), [JSS Article](http://www.jstatsoft.org/v40/i01/paper)  | 
+| `reshape2`    | data transformation  | [Website](http://had.co.nz/reshape/), [JSS Article](http://www.jstatsoft.org/v21/i12/paper)  | 
+| `ggplot2`     | visualization        | [Website](http://ggplot2.org/), [Cookbook](http://www.cookbook-r.com/Graphs/), [Reference](http://docs.ggplot2.org/current/)  |
+| `stringr`     | work with strings    | [R Journal Article](http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Wickham.pdf) |
+| `lubridate`   | work with date-times | [JSS Article](http://www.jstatsoft.org/v40/i03/paper) |
 
 To install a package, you can use the function `install_packages()` at the command line:
 
@@ -69,5 +69,17 @@ install_packages("plyr")
 
 Or you can use the RStudio IDE: [Video Demo](http://youtu.be/u1r5XTqrCTQ)
 
+---
+## Vectors
 
 
+---
+## Data Frames
+
+
+---
+## Importing Data from CSV
+
+
+---
+##  
