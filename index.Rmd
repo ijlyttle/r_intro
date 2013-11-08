@@ -51,13 +51,15 @@ Some helpful videos:
 
 User-contributed packages are a big part of R's success.
 
-Here's a subjective list of essential packages:
+Here's a subjective list of "essential" packages to be installed:
 
-* `plyr`
-* `reshape2`
-* `ggplot2`
-* `stringr`
-* `lubridate`
+|               |               |  
+| ------------- | ------------- | 
+| `plyr`        | data transformation | 
+| `reshape2`    | data transformation |   
+| `ggplot2`     | visualization      |   
+| `stringr`     | work with strings   |
+| `lubridate`   | work with date-times    |
 
 To install a package, you can use the function `install_packages()` at the command line:
 
