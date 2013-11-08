@@ -45,4 +45,27 @@ Some helpful videos:
 
  <img src="figure/rstudio-windows.png", width="100%"/>
 
+---
+
+## Packages
+
+User-contributed packages are a big part of R's success.
+
+Here's a subjective list of essential packages:
+
+* `plyr`
+* `reshape2`
+* `ggplot2`
+* `stringr`
+* `lubridate`
+
+To install a package, you can use the function `install_packages()` at the command line:
+
+```{r eval=FALSE}
+install_packages("plyr")
+```
+
+Or you can use the RStudio IDE: [Video Demo](http://youtu.be/u1r5XTqrCTQ)
+
+
 
