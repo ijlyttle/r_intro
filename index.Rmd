@@ -6,11 +6,19 @@ job         : Analytics for Solutions, Schneider Electric
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
-widgets     : [bootstrap]            # {mathjax, quiz, bootstrap}
+widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
+assets:
+  css: "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
 
 ---
+## Motivation
 
+```{r optset, echo=FALSE}
+opts_chunk$set(comment=NA, tidy=FALSE, fig.align="center", dev="png")
+```
+
+---
 ## Installation
 
 You will need to install:
@@ -25,29 +33,75 @@ In general, install the latest versions; the defaults work very well.
 
 Some helpful videos from Amanda Traud:
 
-* [Installing R](http://youtu.be/X_oFb2iAdu8)
-* [Installing RStudio](http://youtu.be/AZPbg29Plpw)
+* <i class="fa fa-youtube"></i> [Installing R](http://youtu.be/X_oFb2iAdu8)
+* <i class="fa fa-youtube"></i> [Installing RStudio](http://youtu.be/AZPbg29Plpw)
 
 --- &my_twocol  w1:33% w2:65%
 ## Tour of RStudio IDE
 
 *** =left
 
-* Live demo
-
-* Alternative: 
-
-  View `Screencast` at
+`Screencast` at
   
-  [www.rstudio.com/ide](http://www.rstudio.com/ide/)
+<i class="fa fa-play-circle-o"></i> [www.rstudio.com/ide](http://www.rstudio.com/ide/)
 
 *** =right
 
  <img src="figure/rstudio-windows.png", width="100%"/>
 
 
----
+--- &my_twocol  w1:33% w2:65%
 ## Vectors
+
+*** =left
+
+Collection of like objects
+
+Assembled using `c()`
+
+*** =right
+
+```{r vector}
+a <- c(1, 2, 3)
+b <- c(4, 5, 6)
+a
+b
+c(a, b)
+```
+
+*** =foot
+
+<i class="fa fa-youtube"></i> GoogleDeveloplers:
+[Create and Work With Vectors](http://youtu.be/YhQOV27pQfg)
+
+--- &my_twocol  w1:33% w2:65%
+## Vectors
+
+*** =left
+
+Can be:
+
+* numeric
+* character
+* logical
+
+*** =right
+
+```{r vector_type}
+c(1,2)
+c("Square D", "Merlin Gerin")
+c(TRUE, FALSE)
+```
+
+*** =foot
+
+<i class="fa fa-youtube"></i> GoogleDeveloplers:
+[Character and Boolean Vectors](http://youtu.be/GKu5tw_bIpA)
+
+
+--- &my_twocol  w1:33% w2:65%
+## Lists 
+
 
 
 ---
@@ -55,7 +109,7 @@ Some helpful videos from Amanda Traud:
 
 
 ---
-## Importing Data from CSV
+## Importing Data Frames from CSV
 
 
 ---
@@ -73,22 +127,40 @@ Here's a subjective list of "essential" packages to be installed:
 | `stringr`     | work with strings    | [R Journal Article](http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Wickham.pdf) |
 | `lubridate`   | work with date-times | [JSS Article](http://www.jstatsoft.org/v40/i03/paper) |
 
-To install a package, you can use the function `install_packages()` at the command line:
+To install a package, you can use the command-line function:
 
 ```{r eval=FALSE}
 install_packages("plyr")
 ```
 
-Or you can use the RStudio IDE: [Video Demo](http://youtu.be/u1r5XTqrCTQ) from Andrew Jahn
+Or you can use the RStudio IDE: <i class="fa fa-youtube"></i> [Andrew Jahn: Demo](http://youtu.be/u1r5XTqrCTQ) 
+
+---
+## Visualizing
+
+---
+## Linear Regression
+
+---
+## Snapshots of Advanced R
 
 
 ---
-## References
-
-<span class="glyphicon glyphicon-star"></span>
+## Further Learning
 
 |          |            |
 |----------|------------|
-|  Amanda Traud: [R Installation](http://youtu.be/X_oFb2iAdu8) & [RStudio Installation](http://youtu.be/AZPbg29Plpw)        |  Video walkthrough of installation process    |
-| GoogleDeveloplers: [Introduction to R](http://www.youtube.com/playlist?list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP) | Great set of short videos introducing the basics |
-| Andrew Jahn: [RStudio: Package Installation](http://youtu.be/u1r5XTqrCTQ) | How to install and detach R packages |
+| <i class="fa fa-youtube"></i> Hadley Wickham: [Google Tech Talk](http://youtu.be/TaxJwC_MP9Q) | Use of programming languages for data analysis <i class="fa fa-coffee"></i> |
+| <i class="fa fa-youtube"></i> GoogleDeveloplers:  [Introduction to R](http://www.youtube.com/playlist?list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP) | Great set of short videos introducing the basics |
+| <i class="fa fa-vimeo-square"></i> Hadley Wickham: [Tidy Data](http://vimeo.com/33727555) | Essential talk on how to organize data <i class="fa fa-coffee"></i> |
+| <i class="fa fa-book"></i> Norman Matloff: [The Art of R Programming](http://amzn.com/1593273843)| Solid tutorial introduction |
+| <i class="fa fa-book"></i> Garrett Grolemund: [Data Analysis with R](http://amzn.com/1449359019) (June 2014) | Incorporates Hadley packages `plyr`, `ggplot2`|
+| <i class="fa fa-link"></i> Hadley Wickham: [Advanced R](http://adv-r.had.co.nz/) | Learn what's behind the curtain  |
+| <i class="fa fa-link"></i> Rstudio: [Shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
+| <i class="fa fa-github"></i> Ramnath Vaidyanathan: [rCharts](http://ramnathv.github.io/rCharts/) | Create `d3.js` charts using R |
+| <i class="fa fa-github"></i> Ramnath Vaidyanathan:  [Slidify](http://slidify.org/) | Create html5 presentations, blog posts using R |
+
+
+
+<br/>
+<i class="fa fa-coffee"></i> - longer video
