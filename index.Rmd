@@ -6,12 +6,11 @@ job         : Analytics for Solutions, Schneider Electric
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
-widgets     : []            # {mathjax, quiz, bootstrap}
+widgets     : [bootstrap]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
----
-
 
 ---
+
 ## Installation
 
 You will need to install:
@@ -24,7 +23,7 @@ You will need to install:
 
 In general, install the latest versions; the defaults work very well. 
 
-Some helpful videos:
+Some helpful videos from Amanda Traud:
 
 * [Installing R](http://youtu.be/X_oFb2iAdu8)
 * [Installing RStudio](http://youtu.be/AZPbg29Plpw)
@@ -45,6 +44,19 @@ Some helpful videos:
 *** =right
 
  <img src="figure/rstudio-windows.png", width="100%"/>
+
+
+---
+## Vectors
+
+
+---
+## Data Frames
+
+
+---
+## Importing Data from CSV
+
 
 ---
 ## Packages
@@ -67,19 +79,16 @@ To install a package, you can use the function `install_packages()` at the comma
 install_packages("plyr")
 ```
 
-Or you can use the RStudio IDE: [Video Demo](http://youtu.be/u1r5XTqrCTQ)
-
----
-## Vectors
+Or you can use the RStudio IDE: [Video Demo](http://youtu.be/u1r5XTqrCTQ) from Andrew Jahn
 
 
 ---
-## Data Frames
+## References
 
+<span class="glyphicon glyphicon-star"></span>
 
----
-## Importing Data from CSV
-
-
----
-##  
+|          |            |
+|----------|------------|
+|  Amanda Traud: [R Installation](http://youtu.be/X_oFb2iAdu8) & [RStudio Installation](http://youtu.be/AZPbg29Plpw)        |  Video walkthrough of installation process    |
+| GoogleDeveloplers: [Introduction to R](http://www.youtube.com/playlist?list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP) | Great set of short videos introducing the basics |
+| Andrew Jahn: [RStudio: Package Installation](http://youtu.be/u1r5XTqrCTQ) | How to install and detach R packages |
