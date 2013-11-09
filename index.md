@@ -184,6 +184,10 @@ This is where the "action" is.
 
 Data frames are lists where each member is a vector of the same length.
 
+The rows of are often called "observations".
+
+The columns are often called "variables".
+
 *** =right
 
 
@@ -230,6 +234,13 @@ Here's a subjective list of "essential" packages to be installed:
 | `ggplot2`     | visualization        | [Website](http://ggplot2.org/), [Cookbook](http://www.cookbook-r.com/Graphs/), [Reference](http://docs.ggplot2.org/current/)  |
 | `stringr`     | work with strings    | [R Journal Article](http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Wickham.pdf) |
 | `lubridate`   | work with date-times | [JSS Article](http://www.jstatsoft.org/v40/i03/paper) |
+<br/>
+
+Some words here about Hadley Wickham's contribution in standardizing the interface.
+
+---
+## Package Installation
+
 
 To install a package, you can use the command-line function:
 
@@ -239,7 +250,9 @@ install_packages("plyr")
 ```
 
 
-Or you can use the RStudio IDE: <i class="fa fa-youtube"></i> [Andrew Jahn: Demo](http://youtu.be/u1r5XTqrCTQ) 
+Or you can use the RStudio IDE
+
+<i class="fa fa-youtube"></i> Andrew Jahn: [Installing Packages in R Studio](http://youtu.be/u1r5XTqrCTQ) 
 
 ---
 ## Visualization
