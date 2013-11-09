@@ -197,13 +197,32 @@ a
   <article data-timings="">
     
 <div class='left' style='float:left;width:33%'>
- 
+ <p>Collections of not-necessarily like objects</p>
+
 </div>
 <div class='right' style='float:right;width:65%'>
- 
+ <pre><code class="r">a &lt;- list(title=&quot;Star Wars&quot;, year=1977)
+a
+</code></pre>
+
+<pre><code>$title
+[1] &quot;Star Wars&quot;
+
+$year
+[1] 1977
+</code></pre>
+
+<pre><code class="r">a$title
+</code></pre>
+
+<pre><code>[1] &quot;Star Wars&quot;
+</code></pre>
+
 </div>
 <div class='foot' style='float:left;width:100%'>
- 
+ <p><i class="fa fa-youtube"></i> GoogleDeveloplers:
+<a href="http://youtu.be/UffunYeERV0">Lists</a></p>
+
 </div>
   </article>
   <!-- Presenter Notes -->
@@ -215,6 +234,35 @@ a
   </hgroup>
   <article data-timings="">
     
+<div class='left' style='float:left;width:33%'>
+ <p>This is where the &quot;action&quot; is.</p>
+
+<p>Data frames are lists where each member is a vector of the same length.</p>
+
+</div>
+<div class='right' style='float:right;width:65%'>
+ <pre><code class="r">a &lt;- data.frame(title=c(&quot;Star Wars&quot;, 
+                        &quot;The Empire Strikes Back&quot;,
+                        &quot;Return of the Jedi&quot;),
+                year=c(1977, 1980, 1983))
+a
+</code></pre>
+
+<pre><code>                    title year
+1               Star Wars 1977
+2 The Empire Strikes Back 1980
+3      Return of the Jedi 1983
+</code></pre>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ <p><i class="fa fa-youtube"></i> GoogleDeveloplers:
+<a href="http://youtu.be/qK1ElUMkhq0">Loading Data and Working With Data Frames</a></p>
+
+<p><i class="fa fa-youtube"></i> GoogleDeveloplers:
+<a href="http://youtu.be/cx_3zWo4sUs">Loading Loading Data, Object Summaries, and Dates</a></p>
+
+</div>
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -285,7 +333,7 @@ a
 
 <slide class="" id="slide-10" style="background:;">
   <hgroup>
-    <h2>Visualizing</h2>
+    <h2>Visualization</h2>
   </hgroup>
   <article data-timings="">
     
@@ -429,7 +477,7 @@ a
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Visualizing'>
+        data-slide=10 title='Visualization'>
          10
       </a>
     </li>

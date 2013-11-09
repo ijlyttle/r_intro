@@ -141,10 +141,75 @@ c(TRUE, FALSE)
 --- &my_twocol  w1:33% w2:65%
 ## Lists 
 
+*** =left
+
+Collections of not-necessarily like objects
+
+*** =right
 
 
----
+```r
+a <- list(title="Star Wars", year=1977)
+a
+```
+
+```
+$title
+[1] "Star Wars"
+
+$year
+[1] 1977
+```
+
+```r
+a$title
+```
+
+```
+[1] "Star Wars"
+```
+
+
+*** =foot
+
+<i class="fa fa-youtube"></i> GoogleDeveloplers:
+[Lists](http://youtu.be/UffunYeERV0)
+
+--- &my_twocol  w1:33% w2:65%
 ## Data Frames
+
+*** =left
+
+This is where the "action" is.
+
+Data frames are lists where each member is a vector of the same length.
+
+*** =right
+
+
+```r
+a <- data.frame(title=c("Star Wars", 
+                        "The Empire Strikes Back",
+                        "Return of the Jedi"),
+                year=c(1977, 1980, 1983))
+a
+```
+
+```
+                    title year
+1               Star Wars 1977
+2 The Empire Strikes Back 1980
+3      Return of the Jedi 1983
+```
+
+
+*** =foot
+
+<i class="fa fa-youtube"></i> GoogleDeveloplers:
+[Loading Data and Working With Data Frames](http://youtu.be/qK1ElUMkhq0)
+
+<i class="fa fa-youtube"></i> GoogleDeveloplers:
+[Loading Loading Data, Object Summaries, and Dates](http://youtu.be/cx_3zWo4sUs)
 
 
 ---
@@ -177,7 +242,7 @@ install_packages("plyr")
 Or you can use the RStudio IDE: <i class="fa fa-youtube"></i> [Andrew Jahn: Demo](http://youtu.be/u1r5XTqrCTQ) 
 
 ---
-## Visualizing
+## Visualization
 
 ---
 ## Linear Regression
