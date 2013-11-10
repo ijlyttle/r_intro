@@ -1,0 +1,17 @@
+source,sector,comsumption
+petroleum,transportation,24.637
+petroleum,industrial,7.981
+petroleum,residential_commercial,1.735
+petroleum,electric_power,0.347
+natural_gas,transportation,0.78
+natural_gas,industrial,8.58
+natural_gas,residential_commercial,7.28
+natural_gas,electric_power,9.36
+coal,industrial,1.566
+coal,residential_commercial,0.0696
+coal,electric_power,15.7644
+renewable,transportation,1.157
+renewable,industrial,2.225
+renewable,residential_commercial,0.801
+renewable,electric_power,4.717
+nuclear,electric_power,8.1
