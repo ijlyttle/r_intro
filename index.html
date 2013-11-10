@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Introduction to R and RStudio</title>
+  <title>Introduction to R &amp; RStudio</title>
   <meta charset="utf-8">
-  <meta name="description" content="Introduction to R and RStudio">
+  <meta name="description" content="Introduction to R &amp; RStudio">
   <meta name="author" content="Ian Lyttle">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
-    <h1>Introduction to R and RStudio</h1>
+    <h1>Introduction to R &amp; RStudio</h1>
     <h2></h2>
     <p>Ian Lyttle<br/>Analytics for Solutions, Schneider Electric</p>
   </hgroup>
@@ -44,14 +44,30 @@
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Motivation</h2>
+    <h2>Introduction</h2>
   </hgroup>
   <article data-timings="">
-    <ul>
-<li><p>Everything I demonstrate today is available without license fees.</p></li>
+    <p>There are other options for open-source data analysis: Octave, Python, and Rapid Miner (GUI).</p>
+
+<p>This presentation focuses on R and RStudio:</p>
+
+<ul>
+<li><p>Everything demonstrated here is available without license fees.</p></li>
+<li><p>Exchange of programs and snippets is simple exchange of text.</p></li>
 <li><p>There is, however, an investment in yourself to learn.</p></li>
 <li><p>Learning, done properly, will be frustrating.</p></li>
 </ul>
+
+<p>Warning:</p>
+
+<ul>
+<li><p>about 80% of data-analysis is simply wrestling with data</p></li>
+<li><p>does not lend itself to an introductory presentation</p></li>
+</ul>
+
+<p><i class="fa fa-link"></i> <a href="http://www.gnu.org/software/octave/">Octave</a>
+<i class="fa fa-link"></i> <a href="http://www.python.org/">Python</a>
+<i class="fa fa-link"></i> <a href="http://rapidminer.com/">Rapid Miner</a> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -377,22 +393,124 @@ a
 
 <slide class="" id="slide-13" style="background:;">
   <hgroup>
-    <h2>Snapshots of Advanced R</h2>
+    <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
   <article data-timings="">
     
+<div class='left' style='float:left;width:33%'>
+ 
+</div>
+<div class='right' style='float:right;width:65%'>
+ <p><img src="figure/primary_energy_consume_source_sector_2012_endnotes.jpg", width="100%"/></p>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ <p><i class="fa fa-link"></i> Source: <a href="http://www.eia.gov/energy_in_brief/article/major_energy_sources_and_users.cfm">U.S. Energy Information Administration</a></p>
+
+</div>
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-14" style="background:;">
   <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Import the data</h3>
+
+<pre><code class="r">library(RCurl, quietly=TRUE) # install this package, if you don&#39;t have it
+library(plyr)
+</code></pre>
+
+<pre><code>Warning: package &#39;plyr&#39; was built under R version 3.0.2
+</code></pre>
+
+<pre><code class="r">fileURL &lt;- &quot;https://raw.github.com/ijlyttle/r_intro/master/data/us_energy_2012.csv&quot;
+us_energy_2012 &lt;- read.csv(text=getURL(fileURL, ssl.verifypeer=0L, followlocation=1L))
+head(us_energy_2012) # show first six lines
+</code></pre>
+
+<pre><code>       source                 sector consumption
+1   petroleum         transportation      24.637
+2   petroleum             industrial       7.981
+3   petroleum residential_commercial       1.735
+4   petroleum         electric_power       0.347
+5 natural_gas         transportation       0.780
+6 natural_gas             industrial       8.580
+</code></pre>
+
+<p><i class="fa fa-link"></i> CSV preview: <a href="https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv">us_energy_2012.csv</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Aggregate by source</h3>
+
+<pre><code class="r">us_energy_by_source_2012 &lt;- ddply(  # transform data-frame to data_frame
+  .data = us_energy_2012,           # input data-frame
+  .variable = .(source),            # split by variable &quot;source&quot;
+  .fun = summarize,                 # use summarize() function 
+  consumption = sum(consumption)    # column &quot;consumption&quot; in output data-frame
+)                                   #   is sum of column &quot;consumption&quot; in input data-frame
+
+us_energy_by_source_2012
+</code></pre>
+
+<pre><code>       source consumption
+1        coal        17.4
+2 natural_gas        26.0
+3     nuclear         8.1
+4   petroleum        34.7
+5   renewable         8.9
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Aggregate by sector</h3>
+
+<pre><code class="r">us_energy_by_source_2012 &lt;- ddply(  # transform data-frame to data_frame
+  .data = us_energy_2012,           # input data-frame
+  .variable = .(sector),            # split by variable &quot;sector&quot;
+  .fun = summarize,                 # use summarize() function 
+  consumption = sum(consumption)    # column &quot;consumption&quot; in output data-frame
+)                                   #   is sum of column &quot;consumption&quot; in input data-frame
+
+us_energy_by_source_2012
+</code></pre>
+
+<pre><code>                  sector consumption
+1         electric_power      38.288
+2             industrial      20.352
+3 residential_commercial       9.886
+4         transportation      26.574
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
     <h2>Further Learning</h2>
   </hgroup>
   <article data-timings="">
     <table><thead>
 <tr>
-<th></th>
+<th>Introductory</th>
 <th></th>
 </tr>
 </thead><tbody>
@@ -405,32 +523,46 @@ a
 <td>Great set of short videos introducing the basics</td>
 </tr>
 <tr>
-<td><i class="fa fa-vimeo-square"></i> Hadley Wickham: <a href="http://vimeo.com/33727555">Tidy Data</a></td>
-<td>Essential talk on how to organize data <i class="fa fa-coffee"></i></td>
-</tr>
-<tr>
 <td><i class="fa fa-book"></i> Norman Matloff: <a href="http://amzn.com/1593273843">The Art of R Programming</a></td>
 <td>Solid tutorial introduction</td>
 </tr>
 <tr>
-<td><i class="fa fa-book"></i> Garrett Grolemund: <a href="http://amzn.com/1449359019">Data Analysis with R</a> (June 2014)</td>
-<td>Incorporates Hadley packages <code>plyr</code>, <code>ggplot2</code></td>
+<td><i class="fa fa-book"></i> Garrett Grolemund: <a href="http://amzn.com/1449359019">Data Analysis with R</a></td>
+<td>Incorporates Hadley packages <code>plyr</code>, <code>ggplot2</code>. Avail. June 2014</td>
 </tr>
 <tr>
-<td><i class="fa fa-link"></i> Hadley Wickham: <a href="http://adv-r.had.co.nz/">Advanced R</a></td>
-<td>Learn what&#39;s behind the curtain</td>
+<td><i class="fa fa-vimeo-square"></i> Hadley Wickham: <a href="http://vimeo.com/33727555">Tidy Data</a></td>
+<td>Essential talk on how to organize data (even for non-R people) <i class="fa fa-coffee"></i></td>
+</tr>
+</tbody></table>
+
+<p><br/></p>
+
+<table><thead>
+<tr>
+<th>Advanced</th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><i class="fa fa-link"></i> Yihui Xie: <a href="http://yihui.name/knitr/">knitr</a></td>
+<td>Reporoducible research: dynamic report generation</td>
 </tr>
 <tr>
-<td><i class="fa fa-link"></i> Rstudio: <a href="http://www.rstudio.com/shiny/">Shiny</a></td>
-<td>Create interactive web-applications using R</td>
+<td><i class="fa fa-github"></i> Ramnath Vaidyanathan:  <a href="http://slidify.org/">slidify</a></td>
+<td>Create html5 presentations, blog posts using R</td>
 </tr>
 <tr>
 <td><i class="fa fa-github"></i> Ramnath Vaidyanathan: <a href="http://ramnathv.github.io/rCharts/">rCharts</a></td>
 <td>Create <code>d3.js</code> charts using R</td>
 </tr>
 <tr>
-<td><i class="fa fa-github"></i> Ramnath Vaidyanathan:  <a href="http://slidify.org/">Slidify</a></td>
-<td>Create html5 presentations, blog posts using R</td>
+<td><i class="fa fa-link"></i> Rstudio: <a href="http://www.rstudio.com/shiny/">Shiny</a></td>
+<td>Create interactive web-applications using R</td>
+</tr>
+<tr>
+<td><i class="fa fa-link"></i> Hadley Wickham: <a href="http://adv-r.had.co.nz/">Advanced R</a></td>
+<td>Learn what&#39;s behind the curtain</td>
 </tr>
 </tbody></table>
 
@@ -447,7 +579,7 @@ a
     <ul>
       <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Motivation'>
+        data-slide=1 title='Introduction'>
          1
       </a>
     </li>
@@ -519,14 +651,32 @@ a
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Snapshots of Advanced R'>
+        data-slide=13 title='Case Study: U.S. Energy 2012'>
          13
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Further Learning'>
+        data-slide=14 title='Case Study: U.S. Energy 2012'>
          14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Case Study: U.S. Energy 2012'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Case Study: U.S. Energy 2012'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Further Learning'>
+         17
       </a>
     </li>
   </ul>

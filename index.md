@@ -1,5 +1,5 @@
 ---
-title       : Introduction to R and RStudio
+title       : Introduction to R & RStudio
 subtitle    : 
 author      : Ian Lyttle
 job         : Analytics for Solutions, Schneider Electric
@@ -12,16 +12,33 @@ assets:
   css: "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
 
 ---
-## Motivation
+## Introduction
 
 
 
 
-* Everything I demonstrate today is available without license fees.
+There are other options for open-source data analysis: Octave, Python, and Rapid Miner (GUI).
+
+This presentation focuses on R and RStudio:
+
+* Everything demonstrated here is available without license fees.
+
+* Exchange of programs and snippets is simple exchange of text.
 
 * There is, however, an investment in yourself to learn.
 
 * Learning, done properly, will be frustrating.
+
+Warning:
+
+* about 80% of data-analysis is simply wrestling with data
+
+* does not lend itself to an introductory presentation
+
+<i class="fa fa-link"></i> [Octave](http://www.gnu.org/software/octave/)
+<i class="fa fa-link"></i> [Python](http://www.python.org/)
+<i class="fa fa-link"></i> [Rapid Miner](http://rapidminer.com/) 
+
 
 ---
 ## Installation
@@ -266,24 +283,131 @@ Or you can use the RStudio IDE
 ---
 ## Linear Regression
 
+--- &my_twocol  w1:33% w2:65%
+## Case Study: U.S. Energy 2012
+
+*** =left
+
+
+*** =right
+
+ <img src="figure/primary_energy_consume_source_sector_2012_endnotes.jpg", width="100%"/>
+
+
+*** =foot
+
+<i class="fa fa-link"></i> Source: [U.S. Energy Information Administration](http://www.eia.gov/energy_in_brief/article/major_energy_sources_and_users.cfm)
+
 ---
-## Snapshots of Advanced R
+## Case Study: U.S. Energy 2012
+
+### Import the data
+
+
+```r
+library(RCurl, quietly=TRUE) # install this package, if you don't have it
+library(plyr)
+```
+
+```
+Warning: package 'plyr' was built under R version 3.0.2
+```
+
+```r
+fileURL <- "https://raw.github.com/ijlyttle/r_intro/master/data/us_energy_2012.csv"
+us_energy_2012 <- read.csv(text=getURL(fileURL, ssl.verifypeer=0L, followlocation=1L))
+head(us_energy_2012) # show first six lines
+```
+
+```
+       source                 sector consumption
+1   petroleum         transportation      24.637
+2   petroleum             industrial       7.981
+3   petroleum residential_commercial       1.735
+4   petroleum         electric_power       0.347
+5 natural_gas         transportation       0.780
+6 natural_gas             industrial       8.580
+```
+
+
+<i class="fa fa-link"></i> CSV preview: [us_energy_2012.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv)
+
+---
+## Case Study: U.S. Energy 2012
+
+### Aggregate by source
+
+
+```r
+us_energy_by_source_2012 <- ddply(  # transform data-frame to data_frame
+  .data = us_energy_2012,           # input data-frame
+  .variable = .(source),            # split by variable "source"
+  .fun = summarize,                 # use summarize() function 
+  consumption = sum(consumption)    # column "consumption" in output data-frame
+)                                   #   is sum of column "consumption" in input data-frame
+
+us_energy_by_source_2012
+```
+
+```
+       source consumption
+1        coal        17.4
+2 natural_gas        26.0
+3     nuclear         8.1
+4   petroleum        34.7
+5   renewable         8.9
+```
+
+
+---
+## Case Study: U.S. Energy 2012
+
+### Aggregate by sector
+
+
+```r
+us_energy_by_source_2012 <- ddply(  # transform data-frame to data_frame
+  .data = us_energy_2012,           # input data-frame
+  .variable = .(sector),            # split by variable "sector"
+  .fun = summarize,                 # use summarize() function 
+  consumption = sum(consumption)    # column "consumption" in output data-frame
+)                                   #   is sum of column "consumption" in input data-frame
+
+us_energy_by_source_2012
+```
+
+```
+                  sector consumption
+1         electric_power      38.288
+2             industrial      20.352
+3 residential_commercial       9.886
+4         transportation      26.574
+```
+
+
+
 
 
 ---
 ## Further Learning
 
-|          |            |
+| Introductory         |            |
 |----------|------------|
 | <i class="fa fa-youtube"></i> Hadley Wickham: [Google Tech Talk](http://youtu.be/TaxJwC_MP9Q) | Use of programming languages for data analysis <i class="fa fa-coffee"></i> |
 | <i class="fa fa-youtube"></i> GoogleDeveloplers:  [Introduction to R](http://www.youtube.com/playlist?list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP) | Great set of short videos introducing the basics |
-| <i class="fa fa-vimeo-square"></i> Hadley Wickham: [Tidy Data](http://vimeo.com/33727555) | Essential talk on how to organize data <i class="fa fa-coffee"></i> |
 | <i class="fa fa-book"></i> Norman Matloff: [The Art of R Programming](http://amzn.com/1593273843)| Solid tutorial introduction |
-| <i class="fa fa-book"></i> Garrett Grolemund: [Data Analysis with R](http://amzn.com/1449359019) (June 2014) | Incorporates Hadley packages `plyr`, `ggplot2`|
-| <i class="fa fa-link"></i> Hadley Wickham: [Advanced R](http://adv-r.had.co.nz/) | Learn what's behind the curtain  |
-| <i class="fa fa-link"></i> Rstudio: [Shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
+| <i class="fa fa-book"></i> Garrett Grolemund: [Data Analysis with R](http://amzn.com/1449359019)  | Incorporates Hadley packages `plyr`, `ggplot2`. Avail. June 2014|
+| <i class="fa fa-vimeo-square"></i> Hadley Wickham: [Tidy Data](http://vimeo.com/33727555) | Essential talk on how to organize data (even for non-R people) <i class="fa fa-coffee"></i> |
+
+<br/>
+
+| Advanced         |            |
+|----------|------------|
+| <i class="fa fa-link"></i> Yihui Xie: [knitr](http://yihui.name/knitr/) | Reporoducible research: dynamic report generation
+| <i class="fa fa-github"></i> Ramnath Vaidyanathan:  [slidify](http://slidify.org/) | Create html5 presentations, blog posts using R |
 | <i class="fa fa-github"></i> Ramnath Vaidyanathan: [rCharts](http://ramnathv.github.io/rCharts/) | Create `d3.js` charts using R |
-| <i class="fa fa-github"></i> Ramnath Vaidyanathan:  [Slidify](http://slidify.org/) | Create html5 presentations, blog posts using R |
+| <i class="fa fa-link"></i> Rstudio: [Shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
+| <i class="fa fa-link"></i> Hadley Wickham: [Advanced R](http://adv-r.had.co.nz/) | Learn what's behind the curtain  |
 
 
 
