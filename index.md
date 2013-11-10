@@ -17,6 +17,12 @@ assets:
 
 
 
+* Everything I demonstrate today is available without license fees.
+
+* There is, however, an investment in yourself to learn.
+
+* Learning, done properly, will be frustrating.
+
 ---
 ## Installation
 
