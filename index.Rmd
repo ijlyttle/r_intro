@@ -244,10 +244,10 @@ library(plyr, quietly=TRUE)
 library(ggplot2)
 
 # set the URL of the file we want to import
-file_url <- "https://raw.github.com/ijlyttle/r_intro/master/data/us_energy_2012.csv"
+file_url <- "http://ijlyttle.github.io/r_intro/data/us_energy_2012.csv"
 
 # read this csv file; parse into a data frame 
-us_energy_2012 <- read.csv(text=getURL(file_url, ssl.verifypeer=0L, followlocation=1L))
+us_energy_2012 <- read.csv(file_url)
 ```
 <br/>
 <i class="fa fa-link"></i> Preview: [us_energy_2012.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv)
