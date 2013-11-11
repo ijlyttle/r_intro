@@ -232,11 +232,11 @@ a
 
 *** =foot
 
-<i class="fa fa-youtube"></i> GoogleDeveloplers:
+GoogleDeveloplers <i class="fa fa-youtube"></i>
 [Loading Data and Working With Data Frames](http://youtu.be/qK1ElUMkhq0)
 
-<i class="fa fa-youtube"></i> GoogleDeveloplers:
-[Loading Loading Data, Object Summaries, and Dates](http://youtu.be/cx_3zWo4sUs)
+GoogleDeveloplers <i class="fa fa-youtube"></i>
+[Loading Data, Object Summaries, and Dates](http://youtu.be/cx_3zWo4sUs)
 
 
 ---
@@ -317,7 +317,7 @@ Demonstration of:
 --- &my_twocol  w1:33% w2:65%
 ## Case Study: U.S. REDTI
 
-Import the data
+### Import the data
 
 
 ```r
@@ -335,7 +335,211 @@ us_redti_temp_index <-
 
 
 <br/>
-<i class="fa fa-link"></i> Preview: [us_energy_2012.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv)
+Preview: 
+<i class="fa fa-link"></i> [us_redti_consumption.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_consumption.csv) 
+<i class="fa fa-link"></i> [us_redti_temp_index.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_temp_index.csv)
+
+---  &my_twocol  w1:50% w2:50%
+## Case Study: U.S. REDTI
+
+*** =left
+
+### Tidy data 
+
+Variables are stored in columns
+
+Observations are stored in rows
+
+Single type of experimental unit per dataset 
+
+
+
+*** =right
+
+
+```r
+head(us_redti_consumption)
+```
+
+```
+  Year  Winter Spring Summer Fall
+1 1973  -99.99   2579   1499 1951
+2 1974 3628.97   2489   1496 1884
+3 1975 3627.84   2726   1489 1775
+4 1976 3816.05   2424   1519 2047
+5 1977 4374.53   2304   1513 1859
+6 1978 3953.53   2600   1545 1922
+```
+
+
+This is <b>not</b> tidy data.
+
+"Winter" is a season, not a variable.
+<br/>
+
+*** =foot
+
+Hadley Wickham <i class="fa fa-vimeo-square"></i> [Tidy Data](http://vimeo.com/33727555)  <i class="fa fa-link"></i> [Paper](http://vita.had.co.nz/papers/tidy-data.pdf)
+
+
+---  &my_twocol  w1:50% w2:50%
+## Case Study: U.S. REDTI
+
+### Tidy the data
+
+`reshape2` provides some tidying tools, such as the `melt()` function.
+
+*** =left
+
+
+```r
+us_redti_consumption_tidy <- melt(
+  us_redti_consumption, 
+  id.vars = "Year",
+  variable.name = "season",
+  value.name = "consumption"
+)
+```
+
+
+*** =right
+
+
+```r
+head(us_redti_consumption_tidy)
+```
+
+```
+  Year season consumption
+1 1973 Winter      -99.99
+2 1974 Winter     3628.97
+3 1975 Winter     3627.84
+4 1976 Winter     3816.05
+5 1977 Winter     4374.53
+6 1978 Winter     3953.53
+```
+
+
+---  &my_twocol  w1:50% w2:50%
+## Case Study: U.S. REDTI
+
+### Tidy the data
+
+Similarly, the temperature-index data frame is tidied.
+
+*** =left
+
+
+```r
+us_redti_temp_index_tidy <- melt(
+  us_redti_temp_index, 
+  id.vars = "Year",
+  variable.name = "season",
+  value.name = "temperature_index"
+)
+```
+
+
+*** =right
+
+
+```r
+head(us_redti_temp_index_tidy)
+```
+
+```
+  Year season temperature_index
+1 1973 Winter             49.15
+2 1974 Winter             35.99
+3 1975 Winter             31.74
+4 1976 Winter             33.83
+5 1977 Winter             95.26
+6 1978 Winter             92.63
+```
+
+
+---  &my_twocol  w1:50% w2:50%
+## Case Study: U.S. REDTI
+
+
+```r
+summary(us_redti_consumption_tidy)    # Useful functions to examine data
+```
+
+```
+      Year         season    consumption  
+ Min.   :1973   Winter:29   Min.   :-100  
+ 1st Qu.:1980   Spring:29   1st Qu.:1686  
+ Median :1987   Summer:29   Median :2104  
+ Mean   :1987   Fall  :29   Mean   :2301  
+ 3rd Qu.:1994               3rd Qu.:2678  
+ Max.   :2001               Max.   :4406  
+```
+
+```r
+str(us_redti_consumption_tidy)        # Can also use RStudio GUI
+```
+
+```
+'data.frame':	116 obs. of  3 variables:
+ $ Year       : int  1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 ...
+ $ season     : Factor w/ 4 levels "Winter","Spring",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ consumption: num  -100 3629 3628 3816 4375 ...
+```
+
+
+---  &my_twocol  w1:50% w2:50%
+## Case Study: U.S. REDTI
+
+### Clean the data
+
+
+```r
+# identify the "missing" observations for consumption
+cons_missing <- us_redti_consumption_tidy$consumption == -99.99
+# set the "missing" values to NA
+us_redti_consumption_tidy$consumption[cons_missing] <- NA
+# check our work
+head(us_redti_consumption_tidy)
+```
+
+```
+  Year season consumption
+1 1973 Winter          NA
+2 1974 Winter        3629
+3 1975 Winter        3628
+4 1976 Winter        3816
+5 1977 Winter        4375
+6 1978 Winter        3954
+```
+
+
+---  &my_twocol  w1:50% w2:50%
+## Case Study: U.S. REDTI
+
+### Clean the data
+
+
+```r
+# identify the "missing" observations for temperature index
+temp_index_missing <- us_redti_temp_index_tidy$temperature_index == -99.99
+# set the "missing" values to NA
+us_redti_temp_index_tidy$temperature_index[temp_index_missing] <- NA
+# check our work
+summary(us_redti_temp_index_tidy)
+```
+
+```
+      Year         season   temperature_index
+ Min.   :1973   Winter:29   Min.   : 0.0     
+ 1st Qu.:1980   Spring:29   1st Qu.:31.1     
+ Median :1987   Summer:29   Median :44.8     
+ Mean   :1987   Fall  :29   Mean   :45.9     
+ 3rd Qu.:1994               3rd Qu.:59.1     
+ Max.   :2001               Max.   :98.7     
+                            NA's   :2        
+```
+
 
 --- &my_twocol  w1:33% w2:65%
 ## Case Study: U.S. Energy 2012
@@ -608,21 +812,21 @@ sankeyPlot$set(
 
 | Introductory         |            |
 |----------|------------|
-| <i class="fa fa-youtube"></i> Hadley Wickham: [Google Tech Talk](http://youtu.be/TaxJwC_MP9Q) | Use of programming languages for data analysis <i class="fa fa-coffee"></i> |
-| <i class="fa fa-youtube"></i> GoogleDeveloplers:  [Introduction to R](http://www.youtube.com/playlist?list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP) | Great set of short videos introducing the basics |
-| <i class="fa fa-book"></i> Norman Matloff: [The Art of R Programming](http://amzn.com/1593273843)| Solid tutorial introduction |
-| <i class="fa fa-book"></i> Garrett Grolemund: [Data Analysis with R](http://amzn.com/1449359019)  | Incorporates Hadley packages `plyr`, `ggplot2`. Avail. June 2014|
-| <i class="fa fa-vimeo-square"></i> Hadley Wickham: [Tidy Data](http://vimeo.com/33727555) | Essential talk on how to organize data (even for non-R people) <i class="fa fa-coffee"></i> |
+| Hadley Wickham <i class="fa fa-youtube"></i> [Google Tech Talk](http://youtu.be/TaxJwC_MP9Q) | Use of programming languages for data analysis <i class="fa fa-coffee"></i> |
+| GoogleDeveloplers <i class="fa fa-youtube"></i>  [Introduction to R](http://www.youtube.com/playlist?list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP) | Great set of short videos introducing the basics |
+|  Norman Matloff <i class="fa fa-book"></i> [The Art of R Programming](http://amzn.com/1593273843)| Solid tutorial introduction |
+| Garrett Grolemund  <i class="fa fa-book"></i> [Data Analysis with R](http://amzn.com/1449359019)  | Incorporates Hadley packages `plyr`, `ggplot2`. Avail. June 2014|
+|  Hadley Wickham <i class="fa fa-vimeo-square"></i> [Tidy Data](http://vimeo.com/33727555)  <i class="fa fa-link"></i> [Paper](http://vita.had.co.nz/papers/tidy-data.pdf) | Essential work on how to organize data (even for non-R people) <i class="fa fa-coffee"></i> |
 
 <br/>
 
 | Advanced         |            |
 |----------|------------|
-| <i class="fa fa-link"></i> Yihui Xie: [knitr](http://yihui.name/knitr/) | Reporoducible research: dynamic report generation
-| <i class="fa fa-github"></i> Ramnath Vaidyanathan:  [slidify](http://slidify.org/) | Create html5 presentations, blog posts using R |
-| <i class="fa fa-github"></i> Ramnath Vaidyanathan: [rCharts](http://ramnathv.github.io/rCharts/) | Create `d3.js` charts using R |
-| <i class="fa fa-link"></i> Rstudio: [shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
-| <i class="fa fa-link"></i> Hadley Wickham: [Advanced R](http://adv-r.had.co.nz/) | Learn what's behind the curtain  |
+| Yihui Xie  <i class="fa fa-link"></i> [knitr](http://yihui.name/knitr/) | Reporoducible research: dynamic report generation
+|  Ramnath Vaidyanathan <i class="fa fa-github"></i>  [slidify](http://slidify.org/) | Create html5 presentations, blog posts using R |
+| Ramnath Vaidyanathan  <i class="fa fa-github"></i> [rCharts](http://ramnathv.github.io/rCharts/) | Create `d3.js` charts using R |
+|  Rstudio <i class="fa fa-link"></i> [shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
+|  Hadley Wickham <i class="fa fa-link"></i> [Advanced R](http://adv-r.had.co.nz/) | Learn what's behind the curtain  |
 
 
 
