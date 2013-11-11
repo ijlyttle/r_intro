@@ -1,0 +1,190 @@
+<!doctype HTML>
+<meta charset = 'utf-8'>
+<html>
+  <head>
+    <link rel='stylesheet' href='http://nvd3.org/src/nv.d3.css'>
+    
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js' type='text/javascript'></script>
+    <script src='http://d3js.org/d3.v3.min.js' type='text/javascript'></script>
+    <script src='http://timelyportfolio.github.io/rCharts_nvd3_tests/libraries/widgets/nvd3/js/nv.d3.min-new.js' type='text/javascript'></script>
+    <script src='http://nvd3.org/lib/fisheye.js' type='text/javascript'></script>
+    
+    <style>
+    .rChart {
+      display: block;
+      margin-left: auto; 
+      margin-right: auto;
+      width: 800px;
+      height: 400px;
+    }  
+    </style>
+    
+  </head>
+  <body>
+    <div id='chart3d60425b1b50' class='rChart nvd3'></div>  
+    
+    <script type='text/javascript'>
+ $(document).ready(function(){
+      drawchart3d60425b1b50()
+    });
+    function drawchart3d60425b1b50(){  
+      var opts = {
+ "dom": "chart3d60425b1b50",
+"width":    800,
+"height":    400,
+"x": "source",
+"y": "consumption",
+"group": "sector",
+"type": "multiBarChart",
+"id": "chart3d60425b1b50" 
+},
+        data = [
+ {
+ "source": "petroleum",
+"sector": "transportation",
+"consumption":         24.637 
+},
+{
+ "source": "petroleum",
+"sector": "industrial",
+"consumption":          7.981 
+},
+{
+ "source": "petroleum",
+"sector": "residential_commercial",
+"consumption":          1.735 
+},
+{
+ "source": "petroleum",
+"sector": "electric_power",
+"consumption":          0.347 
+},
+{
+ "source": "natural_gas",
+"sector": "transportation",
+"consumption":           0.78 
+},
+{
+ "source": "natural_gas",
+"sector": "industrial",
+"consumption":           8.58 
+},
+{
+ "source": "natural_gas",
+"sector": "residential_commercial",
+"consumption":           7.28 
+},
+{
+ "source": "natural_gas",
+"sector": "electric_power",
+"consumption":           9.36 
+},
+{
+ "source": "coal",
+"sector": "transportation",
+"consumption":              0 
+},
+{
+ "source": "coal",
+"sector": "industrial",
+"consumption":          1.566 
+},
+{
+ "source": "coal",
+"sector": "residential_commercial",
+"consumption":         0.0696 
+},
+{
+ "source": "coal",
+"sector": "electric_power",
+"consumption":        15.7644 
+},
+{
+ "source": "renewable",
+"sector": "transportation",
+"consumption":          1.157 
+},
+{
+ "source": "renewable",
+"sector": "industrial",
+"consumption":          2.225 
+},
+{
+ "source": "renewable",
+"sector": "residential_commercial",
+"consumption":          0.801 
+},
+{
+ "source": "renewable",
+"sector": "electric_power",
+"consumption":          4.717 
+},
+{
+ "source": "nuclear",
+"sector": "transportation",
+"consumption":              0 
+},
+{
+ "source": "nuclear",
+"sector": "industrial",
+"consumption":              0 
+},
+{
+ "source": "nuclear",
+"sector": "residential_commercial",
+"consumption":              0 
+},
+{
+ "source": "nuclear",
+"sector": "electric_power",
+"consumption":            8.1 
+} 
+]
+  
+      if(!(opts.type==="pieChart" || opts.type==="sparklinePlus")) {
+        var data = d3.nest()
+          .key(function(d){
+            //return opts.group === undefined ? 'main' : d[opts.group]
+            //instead of main would think a better default is opts.x
+            return opts.group === undefined ? opts.y : d[opts.group];
+          })
+          .entries(data);
+      }
+      
+      if (opts.disabled != undefined){
+        data.map(function(d, i){
+          d.disabled = opts.disabled[i]
+        })
+      }
+      
+      nv.addGraph(function() {
+        var chart = nv.models[opts.type]()
+          .x(function(d) { return d[opts.x] })
+          .y(function(d) { return d[opts.y] })
+          .width(opts.width)
+          .height(opts.height)
+         
+        
+          
+        
+
+        
+        
+        chart.yAxis
+  .axisLabel("consumption (quads)")
+  .width(    45)
+      
+       d3.select("#" + opts.id)
+        .append('svg')
+        .datum(data)
+        .transition().duration(500)
+        .call(chart);
+
+       nv.utils.windowResize(chart.update);
+       return chart;
+      });
+    };
+</script>
+    
+  </body>
+</html>

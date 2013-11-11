@@ -422,13 +422,16 @@ a
 <pre><code class="r"># install these packages, if you don&#39;t have them
 library(RCurl, quietly=TRUE) 
 library(plyr, quietly=TRUE)
-library(ggplot2)
-
-# set the URL of the file we want to import
-file_url &lt;- &quot;http://ijlyttle.github.io/r_intro/data/us_energy_2012.csv&quot;
-
+library(ggplot2, quietly=TRUE)
 # read this csv file; parse into a data frame 
-us_energy_2012 &lt;- read.csv(file_url)
+us_energy_2012 &lt;- read.csv(&quot;http://ijlyttle.github.io/r_intro/data/us_energy_2012.csv&quot;)
+</code></pre>
+
+<pre><code class="r"># advanced
+install.packages(devtools)
+library(devtools, quietly=TRUE)
+install_github(repo=&quot;rCharts&quot;, username=&quot;ramnathv&quot;, ref=&quot;dev&quot;)
+library(rCharts, quietly=TRUE)
 </code></pre>
 
 <p><br/>
@@ -525,9 +528,7 @@ us_energy_by_source_2012
   <article data-timings="">
     
 <div class='left' style='float:left;width:45%'>
- <h3>Visualize</h3>
-
-<p>Stacked bar plot:</p>
+ <p>Stacked bar plot:</p>
 
 <pre><code class="r">plot_1 &lt;- qplot(
   x = source,
@@ -560,9 +561,7 @@ us_energy_by_source_2012
   <article data-timings="">
     
 <div class='left' style='float:left;width:45%'>
- <h3>Visualize</h3>
-
-<p>Dodged bar plot:</p>
+ <p>Dodged bar plot:</p>
 
 <pre><code class="r">plot_2 &lt;- qplot(
   x = source,
@@ -596,9 +595,7 @@ us_energy_by_source_2012
   <article data-timings="">
     
 <div class='left' style='float:left;width:45%'>
- <h3>Visualize</h3>
-
-<p>Faceted bar plot:</p>
+ <p>Faceted bar plot:</p>
 
 <pre><code class="r">plot_3 &lt;- qplot(
   x = source,
@@ -630,35 +627,79 @@ us_energy_by_source_2012
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
   <article data-timings="">
+    <pre><code class="r"># Using `rCharts` and `NVD3`
+n1 &lt;- nPlot(consumption ~ source, group=&quot;sector&quot;, data=us_energy_2012, type=&#39;multiBarChart&#39;)
+n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
+</code></pre>
+
+<iframe src=figure/nvd3_vis.html seamless></iframe>
+
+<div class='left' style='float:left;width:40%'>
+ 
+</div>
+<div class='right' style='float:right;width:60%'>
+ 
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Using `rCharts` and `NVD3`
+n1 &lt;- nPlot(consumption ~ sector, group=&quot;source&quot;, data=us_energy_2012, type=&#39;multiBarChart&#39;)
+n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
+</code></pre>
+
+<iframe src=figure/nvd3_2_vis.html seamless></iframe>
+
+<div class='left' style='float:left;width:40%'>
+ 
+</div>
+<div class='right' style='float:right;width:60%'>
+ 
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
     
-<div class='left' style='float:left;width:45%'>
- <h3>Visualize</h3>
+<div class='left' style='float:left;width:60%'>
+ <p>Using <code>rCharts</code> to make a Sankey plot:</p>
 
-<p>Sankey plot (using <code>rCharts</code>):</p>
-
-<pre><code class="r">require(rCharts, quietly=TRUE)
-sankeyPlot &lt;- rCharts$new()
-sankeyPlot$setLib(
+<pre><code class="r">sankey_lib &lt;- 
   &#39;http://timelyportfolio.github.io/rCharts_d3_sankey&#39;
-)
+sankeyPlot &lt;- rCharts$new()
+sankeyPlot$setLib(sankey_lib)
 sankeyPlot$set(
   data = summarize(
-          us_energy_2012,
-          source,
-          target = sector,
-          value = consumption),
-  nodeWidth = 20,
-  nodePadding = 5,
+    us_energy_2012[us_energy_2012$consumption &gt; 0, ],
+    source,
+    target = sector,
+    value = consumption
+  ),
   layout = 32,
-  width = 400,
-  height = 475,
-  labelFormat = &quot;&quot;
+  nodeWidth = 20, nodePadding = 5,
+  width = 375, height = 475
 )
-#sankeyPlot
 </code></pre>
 
 </div>
-<div class='right' style='float:right;width:55%'>
+<div class='right' style='float:right;width:40%'>
  <iframe src=figure/sankey_vis.html seamless></iframe>
 
 </div>
@@ -669,7 +710,7 @@ sankeyPlot$set(
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-22" style="background:;">
+<slide class="" id="slide-24" style="background:;">
   <hgroup>
     <h2>Further Learning</h2>
   </hgroup>
@@ -871,8 +912,20 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='Further Learning'>
+        data-slide=22 title='Case Study: U.S. Energy 2012'>
          22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Case Study: U.S. Energy 2012'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Further Learning'>
+         24
       </a>
     </li>
   </ul>

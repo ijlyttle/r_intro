@@ -308,14 +308,21 @@ Or you can use the RStudio IDE
 # install these packages, if you don't have them
 library(RCurl, quietly=TRUE) 
 library(plyr, quietly=TRUE)
-library(ggplot2)
-
-# set the URL of the file we want to import
-file_url <- "http://ijlyttle.github.io/r_intro/data/us_energy_2012.csv"
-
+library(ggplot2, quietly=TRUE)
 # read this csv file; parse into a data frame 
-us_energy_2012 <- read.csv(file_url)
+us_energy_2012 <- read.csv("http://ijlyttle.github.io/r_intro/data/us_energy_2012.csv")
 ```
+
+
+```r
+# advanced
+install.packages(devtools)
+library(devtools, quietly=TRUE)
+install_github(repo="rCharts", username="ramnathv", ref="dev")
+library(rCharts, quietly=TRUE)
+```
+
+
 
 <br/>
 <i class="fa fa-link"></i> Preview: [us_energy_2012.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv)
@@ -400,8 +407,6 @@ us_energy_by_source_2012
 
 *** =left
 
-### Visualize
-
 Stacked bar plot:
 
 ```r
@@ -427,8 +432,6 @@ plot_1 <- qplot(
 ## Case Study: U.S. Energy 2012
 
 *** =left
-
-### Visualize
 
 Dodged bar plot:
 
@@ -457,8 +460,6 @@ plot_2 <- qplot(
 
 *** =left
 
-### Visualize
-
 Faceted bar plot:
 
 ```r
@@ -481,34 +482,57 @@ plot_3 <- qplot(
 <img src="figure/plot_3_vis.png" title="plot of chunk plot_3_vis" alt="plot of chunk plot_3_vis" style="display: block; margin: auto;" />
 
 
---- &my_twocol  w1:45% w2:55%
+--- &my_twocol  w1:40% w2:60%
+## Case Study: U.S. Energy 2012
+
+
+```r
+# Using `rCharts` and `NVD3`
+n1 <- nPlot(consumption ~ source, group="sector", data=us_energy_2012, type='multiBarChart')
+n1$yAxis(axisLabel = "consumption (quads)", width=45)
+```
+
+
+<iframe src=figure/nvd3_vis.html seamless></iframe>
+
+
+--- &my_twocol  w1:40% w2:60%
+## Case Study: U.S. Energy 2012
+
+
+```r
+# Using `rCharts` and `NVD3`
+n1 <- nPlot(consumption ~ sector, group="source", data=us_energy_2012, type='multiBarChart')
+n1$yAxis(axisLabel = "consumption (quads)", width=45)
+```
+
+
+<iframe src=figure/nvd3_2_vis.html seamless></iframe>
+
+--- &my_twocol  w1:60% w2:40%
 ## Case Study: U.S. Energy 2012
 
 *** =left
-### Visualize
 
-Sankey plot (using `rCharts`):
+Using `rCharts` to make a Sankey plot:
+
 
 ```r
-require(rCharts, quietly=TRUE)
-sankeyPlot <- rCharts$new()
-sankeyPlot$setLib(
+sankey_lib <- 
   'http://timelyportfolio.github.io/rCharts_d3_sankey'
-)
+sankeyPlot <- rCharts$new()
+sankeyPlot$setLib(sankey_lib)
 sankeyPlot$set(
   data = summarize(
-          us_energy_2012,
-          source,
-          target = sector,
-          value = consumption),
-  nodeWidth = 20,
-  nodePadding = 5,
+    us_energy_2012[us_energy_2012$consumption > 0, ],
+    source,
+    target = sector,
+    value = consumption
+  ),
   layout = 32,
-  width = 400,
-  height = 475,
-  labelFormat = ""
+  nodeWidth = 20, nodePadding = 5,
+  width = 375, height = 475
 )
-#sankeyPlot
 ```
 
 
