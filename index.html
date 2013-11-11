@@ -52,10 +52,10 @@
 <p>This presentation focuses on R and RStudio:</p>
 
 <ul>
+<li><p>R is an <em>outstanding</em> tool for prototyping a data-analysis.</p></li>
 <li><p>Everything demonstrated here is available without license fees.</p></li>
+<li><p>There is an investment in yourself to learn. Learning, done properly, will be frustrating.</p></li>
 <li><p>Exchange of programs and snippets is simple exchange of text.</p></li>
-<li><p>There is, however, an investment in yourself to learn.</p></li>
-<li><p>Learning, done properly, will be frustrating.</p></li>
 </ul>
 
 <p>Warning:</p>
@@ -294,16 +294,6 @@ a
 
 <slide class="" id="slide-8" style="background:;">
   <hgroup>
-    <h2>Importing Data Frames from CSV</h2>
-  </hgroup>
-  <article data-timings="">
-    
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-9" style="background:;">
-  <hgroup>
     <h2>Packages</h2>
   </hgroup>
   <article data-timings="">
@@ -347,7 +337,36 @@ a
 
 <p><br/></p>
 
-<p>Some words here about Hadley Wickham&#39;s contribution in standardizing the interface.</p>
+<p>One consequence of user-contributed packages is a lack of consistency in interface.</p>
+
+<p>Hadley Wickham&#39;s contribution is a set of useful packges that are well-written, well-documented, and well-consistent.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Package Installation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>To install a package, you can use the command-line:</p>
+
+<pre><code class="r">install_packages(&quot;reshape2&quot;)
+install_packages(&quot;plyr&quot;)
+install_packages(&quot;ggplot2&quot;)
+</code></pre>
+
+<p>To load a package:</p>
+
+<pre><code class="r">require(&quot;reshape2&quot;, quietly=TRUE)
+require(&quot;plyr&quot;, quietly=TRUE)
+require(&quot;ggplot2&quot;, quietly=TRUE)
+</code></pre>
+
+<p>You will see <code>require()</code> and <code>library()</code> used interchangably:</p>
+
+<p>Using RStudio IDE: <i class="fa fa-youtube"></i> Andrew Jahn: <a href="http://youtu.be/u1r5XTqrCTQ">Installing Packages in R Studio</a> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -355,50 +374,52 @@ a
 
 <slide class="" id="slide-10" style="background:;">
   <hgroup>
-    <h2>Package Installation</h2>
+    <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
   <article data-timings="">
-    <p>To install a package, you can use the command-line function:</p>
+    <p>Residential Energy Demand Temperature Index</p>
 
-<pre><code class="r">install_packages(&quot;plyr&quot;)
-</code></pre>
+<div class='left' style='float:left;width:33%'>
+ <p>Demonstration of:</p>
 
-<p>Or you can use the RStudio IDE</p>
+<ul>
+<li><p>importation using <code>read.csv()</code></p></li>
+<li><p>tidy data </p></li>
+<li><p>subsetting</p></li>
+<li><p>modeling using <code>lm()</code></p></li>
+<li><p>visualization using <code>ggplot2</code></p></li>
+<li><p>prediction using <code>predict</code></p></li>
+</ul>
 
-<p><i class="fa fa-youtube"></i> Andrew Jahn: <a href="http://youtu.be/u1r5XTqrCTQ">Installing Packages in R Studio</a> </p>
+</div>
+<div class='right' style='float:right;width:65%'>
+ <p><img src="figure/us_redti_spring.jpg", width="85%"/></p>
 
+</div>
+<div class='foot' style='float:left;width:100%'>
+ <p><i class="fa fa-link"></i> <a href="http://www.ncdc.noaa.gov/societal-impacts/redti/">U.S. National Climatic Data Center</a></p>
+
+</div>
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-11" style="background:;">
   <hgroup>
-    <h2>Visualization</h2>
-  </hgroup>
-  <article data-timings="">
-    
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-12" style="background:;">
-  <hgroup>
-    <h2>Linear Regression</h2>
-  </hgroup>
-  <article data-timings="">
-    
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-13" style="background:;">
-  <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
   <article data-timings="">
     
 <div class='left' style='float:left;width:33%'>
- 
+ <p>Demonstration of:</p>
+
+<ul>
+<li><p>importation using <code>read.csv()</code></p></li>
+<li><p>aggregation using <code>plyr</code></p></li>
+<li><p>visualization using <code>ggplot2</code></p></li>
+<li><p>interacivity using <code>rCharts</code></p></li>
+</ul>
+
 </div>
 <div class='right' style='float:right;width:65%'>
  <p><img src="figure/primary_energy_consume_source_sector_2012_endnotes.jpg", width="100%"/></p>
@@ -412,7 +433,7 @@ a
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-14" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -420,7 +441,6 @@ a
     <h3>Import the data</h3>
 
 <pre><code class="r"># install these packages, if you don&#39;t have them
-library(RCurl, quietly=TRUE) 
 library(plyr, quietly=TRUE)
 library(ggplot2, quietly=TRUE)
 # read this csv file; parse into a data frame 
@@ -441,7 +461,7 @@ library(rCharts, quietly=TRUE)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-15" style="background:;">
+<slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -460,11 +480,15 @@ library(rCharts, quietly=TRUE)
 6 natural_gas             industrial       8.580
 </code></pre>
 
+<p>Note that the consumption is expressed in quads (\(10^{15}\) BTU).</p>
+
+<p>Keeping track of metadata such as units is a challenge.</p>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-16" style="background:;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -493,7 +517,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-17" style="background:;">
+<slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -521,7 +545,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-18" style="background:;">
+<slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -554,7 +578,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-19" style="background:;">
+<slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -588,7 +612,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-20" style="background:;">
+<slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -622,7 +646,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-21" style="background:;">
+<slide class="" id="slide-19" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -647,7 +671,7 @@ n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-22" style="background:;">
+<slide class="" id="slide-20" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -672,16 +696,15 @@ n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-23" style="background:;">
+<slide class="" id="slide-21" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
   <article data-timings="">
     
 <div class='left' style='float:left;width:60%'>
- <p>Using <code>rCharts</code> to make a Sankey plot:</p>
-
-<pre><code class="r">sankey_lib &lt;- 
+ <pre><code class="r"># Using `rCharts` to make a Sankey plot
+sankey_lib &lt;- 
   &#39;http://timelyportfolio.github.io/rCharts_d3_sankey&#39;
 sankeyPlot &lt;- rCharts$new()
 sankeyPlot$setLib(sankey_lib)
@@ -710,7 +733,7 @@ sankeyPlot$set(
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-24" style="background:;">
+<slide class="" id="slide-22" style="background:;">
   <hgroup>
     <h2>Further Learning</h2>
   </hgroup>
@@ -764,7 +787,7 @@ sankeyPlot$set(
 <td>Create <code>d3.js</code> charts using R</td>
 </tr>
 <tr>
-<td><i class="fa fa-link"></i> Rstudio: <a href="http://www.rstudio.com/shiny/">Shiny</a></td>
+<td><i class="fa fa-link"></i> Rstudio: <a href="http://www.rstudio.com/shiny/">shiny</a></td>
 <td>Create interactive web-applications using R</td>
 </tr>
 <tr>
@@ -828,31 +851,31 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Importing Data Frames from CSV'>
+        data-slide=8 title='Packages'>
          8
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Packages'>
+        data-slide=9 title='Package Installation'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Package Installation'>
+        data-slide=10 title='Case Study: U.S. REDTI'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Visualization'>
+        data-slide=11 title='Case Study: U.S. Energy 2012'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Linear Regression'>
+        data-slide=12 title='Case Study: U.S. Energy 2012'>
          12
       </a>
     </li>
@@ -912,20 +935,8 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='Case Study: U.S. Energy 2012'>
+        data-slide=22 title='Further Learning'>
          22
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Case Study: U.S. Energy 2012'>
-         23
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=24 title='Further Learning'>
-         24
       </a>
     </li>
   </ul>
@@ -938,7 +949,21 @@ sankeyPlot$set(
 </body>
   <!-- Load Javascripts for Widgets -->
   
-  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
   <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <!-- DONE LOADING HIGHLIGHTER JS FILES -->

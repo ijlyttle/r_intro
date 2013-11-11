@@ -6,7 +6,7 @@ job         : Analytics for Solutions, Schneider Electric
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
-widgets     : []            # {mathjax, quiz, bootstrap}
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 assets:
   css: "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
@@ -23,13 +23,13 @@ There are other options for open-source data analysis: Octave, Python, and Rapid
 
 This presentation focuses on R and RStudio:
 
+* R is an _outstanding_ tool for prototyping a data-analysis.
+
 * Everything demonstrated here is available without license fees.
 
+* There is an investment in yourself to learn. Learning, done properly, will be frustrating.
+
 * Exchange of programs and snippets is simple exchange of text.
-
-* There is, however, an investment in yourself to learn.
-
-* Learning, done properly, will be frustrating.
 
 Warning:
 
@@ -176,10 +176,6 @@ a
 
 
 ---
-## Importing Data Frames from CSV
-
-
----
 ## Packages
 
 User-contributed packages are a big part of R's success.
@@ -195,38 +191,80 @@ Here's a subjective list of "essential" packages to be installed:
 | `lubridate`   | work with date-times | [JSS Article](http://www.jstatsoft.org/v40/i03/paper) |
 <br/>
 
-Some words here about Hadley Wickham's contribution in standardizing the interface.
+One consequence of user-contributed packages is a lack of consistency in interface.
+
+Hadley Wickham's contribution is a set of useful packges that are well-written, well-documented, and well-consistent.
 
 ---
 ## Package Installation
 
 
-To install a package, you can use the command-line function:
-
+To install a package, you can use the command-line:
 ```{r eval=FALSE}
+install_packages("reshape2")
 install_packages("plyr")
+install_packages("ggplot2")
+```
+To load a package:
+```{r}
+require("reshape2", quietly=TRUE)
+require("plyr", quietly=TRUE)
+require("ggplot2", quietly=TRUE)
 ```
 
-Or you can use the RStudio IDE
+You will see `require()` and `library()` used interchangably:
 
-<i class="fa fa-youtube"></i> Andrew Jahn: [Installing Packages in R Studio](http://youtu.be/u1r5XTqrCTQ) 
+Using RStudio IDE: <i class="fa fa-youtube"></i> Andrew Jahn: [Installing Packages in R Studio](http://youtu.be/u1r5XTqrCTQ) 
 
----
-## Visualization
+--- &my_twocol  w1:33% w2:65%
 
----
-## Linear Regression
+## Case Study: U.S. REDTI
+
+Residential Energy Demand Temperature Index
+
+*** =left
+
+Demonstration of:
+
+* importation using `read.csv()`
+
+* tidy data 
+
+* subsetting
+
+* modeling using `lm()`
+
+* visualization using `ggplot2`
+
+* prediction using `predict`
+
+
+*** =right
+
+ <img src="figure/us_redti_spring.jpg", width="85%"/>
+
+*** =foot
+
+<i class="fa fa-link"></i> [U.S. National Climatic Data Center](http://www.ncdc.noaa.gov/societal-impacts/redti/)
 
 --- &my_twocol  w1:33% w2:65%
 ## Case Study: U.S. Energy 2012
 
 *** =left
 
+Demonstration of:
+
+* importation using `read.csv()`
+
+* aggregation using `plyr`
+
+* visualization using `ggplot2`
+
+* interacivity using `rCharts`
 
 *** =right
 
  <img src="figure/primary_energy_consume_source_sector_2012_endnotes.jpg", width="100%"/>
-
 
 *** =foot
 
@@ -239,7 +277,6 @@ Or you can use the RStudio IDE
 
 ```{r}
 # install these packages, if you don't have them
-library(RCurl, quietly=TRUE) 
 library(plyr, quietly=TRUE)
 library(ggplot2, quietly=TRUE)
 # read this csv file; parse into a data frame 
@@ -267,6 +304,9 @@ library(rCharts, quietly=TRUE)
 head(us_energy_2012) # print the first six lines
 ```
 
+Note that the consumption is expressed in quads ($10^{15}$ BTU).
+
+Keeping track of metadata such as units is a challenge.
 
 ---
 ## Case Study: U.S. Energy 2012
@@ -406,10 +446,8 @@ n1
 ## Case Study: U.S. Energy 2012
 
 *** =left
-
-Using `rCharts` to make a Sankey plot:
-
 ```{r sankey_make}
+# Using `rCharts` to make a Sankey plot
 sankey_lib <- 
   'http://timelyportfolio.github.io/rCharts_d3_sankey'
 sankeyPlot <- rCharts$new()
@@ -451,7 +489,7 @@ sankeyPlot
 | <i class="fa fa-link"></i> Yihui Xie: [knitr](http://yihui.name/knitr/) | Reporoducible research: dynamic report generation
 | <i class="fa fa-github"></i> Ramnath Vaidyanathan:  [slidify](http://slidify.org/) | Create html5 presentations, blog posts using R |
 | <i class="fa fa-github"></i> Ramnath Vaidyanathan: [rCharts](http://ramnathv.github.io/rCharts/) | Create `d3.js` charts using R |
-| <i class="fa fa-link"></i> Rstudio: [Shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
+| <i class="fa fa-link"></i> Rstudio: [shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
 | <i class="fa fa-link"></i> Hadley Wickham: [Advanced R](http://adv-r.had.co.nz/) | Learn what's behind the curtain  |
 
 
