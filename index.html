@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
     media="only screen and (max-device-width: 480px)" >
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
-  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/Tomorrow.css" />
   <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
 <link rel=stylesheet href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"></link>
 
@@ -419,16 +419,33 @@ a
   <article data-timings="">
     <h3>Import the data</h3>
 
-<pre><code class="r">library(RCurl, quietly=TRUE) # install this package, if you don&#39;t have it
-library(plyr)
+<pre><code class="r"># install these packages, if you don&#39;t have them
+library(RCurl, quietly=TRUE) 
+library(plyr, quietly=TRUE)
+library(ggplot2)
+
+# set the URL of the file we want to import
+file_url &lt;- &quot;https://raw.github.com/ijlyttle/r_intro/master/data/us_energy_2012.csv&quot;
+
+# read this csv file; parse into a data frame 
+us_energy_2012 &lt;- read.csv(text=getURL(file_url, ssl.verifypeer=0L, followlocation=1L))
 </code></pre>
 
-<pre><code>Warning: package &#39;plyr&#39; was built under R version 3.0.2
-</code></pre>
+<p><br/>
+<i class="fa fa-link"></i> Preview: <a href="https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv">us_energy_2012.csv</a></p>
 
-<pre><code class="r">fileURL &lt;- &quot;https://raw.github.com/ijlyttle/r_intro/master/data/us_energy_2012.csv&quot;
-us_energy_2012 &lt;- read.csv(text=getURL(fileURL, ssl.verifypeer=0L, followlocation=1L))
-head(us_energy_2012) # show first six lines
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Examine the data</h3>
+
+<pre><code class="r">head(us_energy_2012) # print the first six lines
 </code></pre>
 
 <pre><code>       source                 sector consumption
@@ -440,13 +457,11 @@ head(us_energy_2012) # show first six lines
 6 natural_gas             industrial       8.580
 </code></pre>
 
-<p><i class="fa fa-link"></i> CSV preview: <a href="https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv">us_energy_2012.csv</a></p>
-
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-15" style="background:;">
+<slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -475,7 +490,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-16" style="background:;">
+<slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -503,7 +518,158 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-17" style="background:;">
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div class='left' style='float:left;width:45%'>
+ <h3>Visualize</h3>
+
+<p>Stacked bar plot:</p>
+
+<pre><code class="r">plot_1 &lt;- qplot(
+  x = source,
+  y = consumption,
+  fill = sector,
+  data = us_energy_2012,
+  geom = &quot;bar&quot;,
+  stat = &quot;identity&quot;,
+  ylab = &quot;consumption (quads)&quot;,
+  main = &quot;U.S. Energy Consumption 2012&quot;
+)
+</code></pre>
+
+</div>
+<div class='right' style='float:right;width:55%'>
+ <p><img src="figure/plot_1_vis.png" title="plot of chunk plot_1_vis" alt="plot of chunk plot_1_vis" style="display: block; margin: auto;" /></p>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div class='left' style='float:left;width:45%'>
+ <h3>Visualize</h3>
+
+<p>Dodged bar plot:</p>
+
+<pre><code class="r">plot_2 &lt;- qplot(
+  x = source,
+  y = consumption,
+  fill = sector,
+  data = us_energy_2012,
+  geom = &quot;bar&quot;,
+  stat = &quot;identity&quot;,
+  position = &quot;dodge&quot;,
+  ylab = &quot;consumption (quads)&quot;,
+  main = &quot;U.S. Energy Consumption 2012&quot;
+)
+</code></pre>
+
+</div>
+<div class='right' style='float:right;width:55%'>
+ <p><img src="figure/plot_2_vis.png" title="plot of chunk plot_2_vis" alt="plot of chunk plot_2_vis" style="display: block; margin: auto;" /></p>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div class='left' style='float:left;width:45%'>
+ <h3>Visualize</h3>
+
+<p>Faceted bar plot:</p>
+
+<pre><code class="r">plot_3 &lt;- qplot(
+  x = source,
+  y = consumption,
+  data = us_energy_2012,
+  geom = &quot;bar&quot;,
+  stat = &quot;identity&quot;,
+  facets = sector ~ .,
+  ylab = &quot;consumption (quads)&quot;,
+  main = &quot;U.S. Energy Consumption 2012&quot;
+) + 
+  coord_flip()
+</code></pre>
+
+</div>
+<div class='right' style='float:right;width:55%'>
+ <p><img src="figure/plot_3_vis.png" title="plot of chunk plot_3_vis" alt="plot of chunk plot_3_vis" style="display: block; margin: auto;" /></p>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. Energy 2012</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div class='left' style='float:left;width:45%'>
+ <h3>Visualize</h3>
+
+<p>Sankey plot (using <code>rCharts</code>):</p>
+
+<pre><code class="r">require(rCharts, quietly=TRUE)
+sankeyPlot &lt;- rCharts$new()
+sankeyPlot$setLib(
+  &#39;http://timelyportfolio.github.io/rCharts_d3_sankey&#39;
+)
+sankeyPlot$set(
+  data = summarize(
+          us_energy_2012,
+          source,
+          target = sector,
+          value = consumption),
+  nodeWidth = 20,
+  nodePadding = 5,
+  layout = 32,
+  width = 400,
+  height = 475,
+  labelFormat = &quot;&quot;
+)
+#sankeyPlot
+</code></pre>
+
+</div>
+<div class='right' style='float:right;width:55%'>
+ <iframe src=figure/sankey_vis.html seamless></iframe>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
   <hgroup>
     <h2>Further Learning</h2>
   </hgroup>
@@ -675,8 +841,38 @@ us_energy_by_source_2012
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='Further Learning'>
+        data-slide=17 title='Case Study: U.S. Energy 2012'>
          17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Case Study: U.S. Energy 2012'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Case Study: U.S. Energy 2012'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Case Study: U.S. Energy 2012'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Case Study: U.S. Energy 2012'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Further Learning'>
+         22
       </a>
     </li>
   </ul>

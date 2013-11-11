@@ -5,7 +5,7 @@ author      : Ian Lyttle
 job         : Analytics for Solutions, Schneider Electric
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow      # 
+hitheme     : Tomorrow      # 
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 assets:
@@ -305,18 +305,29 @@ Or you can use the RStudio IDE
 
 
 ```r
-library(RCurl, quietly=TRUE) # install this package, if you don't have it
-library(plyr)
+# install these packages, if you don't have them
+library(RCurl, quietly=TRUE) 
+library(plyr, quietly=TRUE)
+library(ggplot2)
+
+# set the URL of the file we want to import
+file_url <- "https://raw.github.com/ijlyttle/r_intro/master/data/us_energy_2012.csv"
+
+# read this csv file; parse into a data frame 
+us_energy_2012 <- read.csv(text=getURL(file_url, ssl.verifypeer=0L, followlocation=1L))
 ```
 
-```
-Warning: package 'plyr' was built under R version 3.0.2
-```
+<br/>
+<i class="fa fa-link"></i> Preview: [us_energy_2012.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv)
+
+---
+## Case Study: U.S. Energy 2012
+
+### Examine the data
+
 
 ```r
-fileURL <- "https://raw.github.com/ijlyttle/r_intro/master/data/us_energy_2012.csv"
-us_energy_2012 <- read.csv(text=getURL(fileURL, ssl.verifypeer=0L, followlocation=1L))
-head(us_energy_2012) # show first six lines
+head(us_energy_2012) # print the first six lines
 ```
 
 ```
@@ -330,7 +341,6 @@ head(us_energy_2012) # show first six lines
 ```
 
 
-<i class="fa fa-link"></i> CSV preview: [us_energy_2012.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv)
 
 ---
 ## Case Study: U.S. Energy 2012
@@ -385,7 +395,126 @@ us_energy_by_source_2012
 ```
 
 
+--- &my_twocol  w1:45% w2:55%
+## Case Study: U.S. Energy 2012
 
+*** =left
+
+### Visualize
+
+Stacked bar plot:
+
+```r
+plot_1 <- qplot(
+  x = source,
+  y = consumption,
+  fill = sector,
+  data = us_energy_2012,
+  geom = "bar",
+  stat = "identity",
+  ylab = "consumption (quads)",
+  main = "U.S. Energy Consumption 2012"
+)
+```
+
+
+*** =right
+
+<img src="figure/plot_1_vis.png" title="plot of chunk plot_1_vis" alt="plot of chunk plot_1_vis" style="display: block; margin: auto;" />
+
+
+--- &my_twocol  w1:45% w2:55%
+## Case Study: U.S. Energy 2012
+
+*** =left
+
+### Visualize
+
+Dodged bar plot:
+
+```r
+plot_2 <- qplot(
+  x = source,
+  y = consumption,
+  fill = sector,
+  data = us_energy_2012,
+  geom = "bar",
+  stat = "identity",
+  position = "dodge",
+  ylab = "consumption (quads)",
+  main = "U.S. Energy Consumption 2012"
+)
+```
+
+
+*** =right
+
+<img src="figure/plot_2_vis.png" title="plot of chunk plot_2_vis" alt="plot of chunk plot_2_vis" style="display: block; margin: auto;" />
+
+
+--- &my_twocol  w1:45% w2:55%
+## Case Study: U.S. Energy 2012
+
+*** =left
+
+### Visualize
+
+Faceted bar plot:
+
+```r
+plot_3 <- qplot(
+  x = source,
+  y = consumption,
+  data = us_energy_2012,
+  geom = "bar",
+  stat = "identity",
+  facets = sector ~ .,
+  ylab = "consumption (quads)",
+  main = "U.S. Energy Consumption 2012"
+) + 
+  coord_flip()
+```
+
+
+*** =right
+
+<img src="figure/plot_3_vis.png" title="plot of chunk plot_3_vis" alt="plot of chunk plot_3_vis" style="display: block; margin: auto;" />
+
+
+--- &my_twocol  w1:45% w2:55%
+## Case Study: U.S. Energy 2012
+
+*** =left
+### Visualize
+
+Sankey plot (using `rCharts`):
+
+```r
+require(rCharts, quietly=TRUE)
+sankeyPlot <- rCharts$new()
+sankeyPlot$setLib(
+  'http://timelyportfolio.github.io/rCharts_d3_sankey'
+)
+sankeyPlot$set(
+  data = summarize(
+          us_energy_2012,
+          source,
+          target = sector,
+          value = consumption),
+  nodeWidth = 20,
+  nodePadding = 5,
+  layout = 32,
+  width = 400,
+  height = 475,
+  labelFormat = ""
+)
+#sankeyPlot
+```
+
+
+*** =right
+
+<iframe src=figure/sankey_vis.html seamless></iframe>
 
 
 ---
