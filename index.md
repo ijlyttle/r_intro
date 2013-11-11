@@ -280,12 +280,11 @@ require("ggplot2", quietly=TRUE)
 ```
 
 
-You will see `require()` and `library()` used interchangably:
+`require()` and `library()` are used interchangably.
 
 Using RStudio IDE: <i class="fa fa-youtube"></i> Andrew Jahn: [Installing Packages in R Studio](http://youtu.be/u1r5XTqrCTQ) 
 
 --- &my_twocol  w1:33% w2:65%
-
 ## Case Study: U.S. REDTI
 
 Residential Energy Demand Temperature Index
@@ -294,7 +293,7 @@ Residential Energy Demand Temperature Index
 
 Demonstration of:
 
-* importation using `read.csv()`
+* import using `read.csv()`
 
 * tidy data 
 
@@ -316,13 +315,36 @@ Demonstration of:
 <i class="fa fa-link"></i> [U.S. National Climatic Data Center](http://www.ncdc.noaa.gov/societal-impacts/redti/)
 
 --- &my_twocol  w1:33% w2:65%
+## Case Study: U.S. REDTI
+
+Import the data
+
+
+```r
+# install these packages, if you don't have them
+library(reshape2, quietly=TRUE)
+library(plyr, quietly=TRUE)
+library(ggplot2, quietly=TRUE)
+
+# read these csv files; parse into data frames 
+us_redti_consumption <- 
+  read.csv("http://ijlyttle.github.io/r_intro/data/us_redti_consumption.csv")
+us_redti_temp_index <- 
+  read.csv("http://ijlyttle.github.io/r_intro/data/us_redti_temp_index.csv")
+```
+
+
+<br/>
+<i class="fa fa-link"></i> Preview: [us_energy_2012.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv)
+
+--- &my_twocol  w1:33% w2:65%
 ## Case Study: U.S. Energy 2012
 
 *** =left
 
 Demonstration of:
 
-* importation using `read.csv()`
+* import using `read.csv()`
 
 * aggregation using `plyr`
 
@@ -356,7 +378,7 @@ us_energy_2012 <- read.csv("http://ijlyttle.github.io/r_intro/data/us_energy_201
 ```r
 # advanced
 install.packages(devtools)
-library(devtools, quietly=TRUE)
+library(devtools, quietly=TRUE) # requires RTools from CRAN 
 install_github(repo="rCharts", username="ramnathv", ref="dev")
 library(rCharts, quietly=TRUE)
 ```
