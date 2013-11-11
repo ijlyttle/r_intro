@@ -7,6 +7,7 @@ natural_gas,transportation,0.78
 natural_gas,industrial,8.58
 natural_gas,residential_commercial,7.28
 natural_gas,electric_power,9.36
+coal,transportation,0
 coal,industrial,1.566
 coal,residential_commercial,0.0696
 coal,electric_power,15.7644
@@ -14,4 +15,7 @@ renewable,transportation,1.157
 renewable,industrial,2.225
 renewable,residential_commercial,0.801
 renewable,electric_power,4.717
+nuclear,transportation,0
+nuclear,industrial,0
+nuclear,residential_commercial,0
 nuclear,electric_power,8.1
