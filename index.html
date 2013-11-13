@@ -52,9 +52,9 @@
 <p>This presentation focuses on R and RStudio:</p>
 
 <ul>
-<li><p>R is an <em>outstanding</em> tool for prototyping a data-analysis.</p></li>
+<li><p>R is an <b>outstanding</b> tool for prototyping a data-analysis.</p></li>
 <li><p>Everything demonstrated here is available without license fees.</p></li>
-<li><p>There is an investment in yourself to learn. Learning, done properly, will be frustrating.</p></li>
+<li><p>There is an investment in yourself to learn. It will be frustrating.</p></li>
 <li><p>Exchange of programs and snippets is simple exchange of text.</p></li>
 </ul>
 
@@ -74,6 +74,33 @@
 </slide>
 
 <slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>This presentation</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Philosohpy</h3>
+
+<p>I want to show as many features as I can in an hour.</p>
+
+<p>An hour, even a week, is not enough time for thoughful discussion, demonstration, and practice.  </p>
+
+<p>I have tried to leave links to other references, so that you may learn at your pace.</p>
+
+<p>Everything in this presentation is reproducible - all the R code is shown.</p>
+
+<h3>More help (?$%<sup>#!!)</sup></h3>
+
+<p>Google is your friend</p>
+
+<p>Stack Overflow (likely someone has already asked)</p>
+
+<p>Informal R networks at work</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
   <hgroup>
     <h2>Installation</h2>
   </hgroup>
@@ -100,7 +127,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-3" style="background:;">
+<slide class="" id="slide-4" style="background:;">
   <hgroup>
     <h2>Tour of RStudio IDE</h2>
   </hgroup>
@@ -123,7 +150,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-4" style="background:;">
+<slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Vectors</h2>
   </hgroup>
@@ -158,7 +185,7 @@ a
 
 </div>
 <div class='foot' style='float:left;width:100%'>
- <p><i class="fa fa-youtube"></i> GoogleDeveloplers:
+ <p>GoogleDeveloplers <i class="fa fa-youtube"></i> 
 <a href="http://youtu.be/YhQOV27pQfg">Create and Work With Vectors</a></p>
 
 </div>
@@ -166,7 +193,7 @@ a
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-5" style="background:;">
+<slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>Vectors</h2>
   </hgroup>
@@ -203,7 +230,7 @@ a
 
 </div>
 <div class='foot' style='float:left;width:100%'>
- <p><i class="fa fa-youtube"></i> GoogleDeveloplers:
+ <p>GoogleDeveloplers <i class="fa fa-youtube"></i> 
 <a href="http://youtu.be/GKu5tw_bIpA">Character and Boolean Vectors</a></p>
 
 </div>
@@ -211,7 +238,7 @@ a
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-6" style="background:;">
+<slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Lists</h2>
   </hgroup>
@@ -241,7 +268,7 @@ $year
 
 </div>
 <div class='foot' style='float:left;width:100%'>
- <p><i class="fa fa-youtube"></i> GoogleDeveloplers:
+ <p>GoogleDeveloplers <i class="fa fa-youtube"></i> 
 <a href="http://youtu.be/UffunYeERV0">Lists</a></p>
 
 </div>
@@ -249,7 +276,7 @@ $year
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-7" style="background:;">
+<slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Data Frames</h2>
   </hgroup>
@@ -260,9 +287,9 @@ $year
 
 <p>Data frames are lists where each member is a vector of the same length.</p>
 
-<p>The rows of are often called &quot;observations&quot;.</p>
+<p>Rows often called &quot;observations&quot;</p>
 
-<p>The columns are often called &quot;variables&quot;.</p>
+<p>Columns often called &quot;variables&quot;</p>
 
 </div>
 <div class='right' style='float:right;width:65%'>
@@ -281,7 +308,11 @@ a
 
 </div>
 <div class='foot' style='float:left;width:100%'>
- <p>GoogleDeveloplers <i class="fa fa-youtube"></i>
+ <p>To import a csv file into a data frame, use <code>read.csv()</code> function. </p>
+
+<p>Be mindful of options such as <code>quote</code>, <code>header</code>.</p>
+
+<p>GoogleDeveloplers <i class="fa fa-youtube"></i>
 <a href="http://youtu.be/qK1ElUMkhq0">Loading Data and Working With Data Frames</a></p>
 
 <p>GoogleDeveloplers <i class="fa fa-youtube"></i>
@@ -292,7 +323,7 @@ a
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-8" style="background:;">
+<slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Packages</h2>
   </hgroup>
@@ -345,16 +376,16 @@ a
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-9" style="background:;">
+<slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Package Installation</h2>
   </hgroup>
   <article data-timings="">
     <p>To install a package, you can use the command-line:</p>
 
-<pre><code class="r">install_packages(&quot;reshape2&quot;)
-install_packages(&quot;plyr&quot;)
-install_packages(&quot;ggplot2&quot;)
+<pre><code class="r">#install_packages(&quot;reshape2&quot;)
+#install_packages(&quot;plyr&quot;)
+#install_packages(&quot;ggplot2&quot;)
 </code></pre>
 
 <p>To load a package:</p>
@@ -366,18 +397,19 @@ require(&quot;ggplot2&quot;, quietly=TRUE)
 
 <p><code>require()</code> and <code>library()</code> are used interchangably.</p>
 
-<p>Using RStudio IDE: <i class="fa fa-youtube"></i> Andrew Jahn: <a href="http://youtu.be/u1r5XTqrCTQ">Installing Packages in R Studio</a> </p>
+<p>Using RStudio IDE: Andrew Jahn  <i class="fa fa-youtube"></i>
+<a href="http://youtu.be/u1r5XTqrCTQ">Installing Packages in R Studio</a> </p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-10" style="background:;">
+<slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
   <article data-timings="">
-    <p>Residential Energy Demand Temperature Index</p>
+    <h3>Residential Energy Demand Temperature Index</h3>
 
 <div class='left' style='float:left;width:33%'>
  <p>Demonstration of:</p>
@@ -388,7 +420,7 @@ require(&quot;ggplot2&quot;, quietly=TRUE)
 <li><p>subsetting</p></li>
 <li><p>modeling using <code>lm()</code></p></li>
 <li><p>visualization using <code>ggplot2</code></p></li>
-<li><p>prediction using <code>predict</code></p></li>
+<li><p>prediction using <code>predict()</code></p></li>
 </ul>
 
 </div>
@@ -404,7 +436,7 @@ require(&quot;ggplot2&quot;, quietly=TRUE)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-11" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
@@ -441,7 +473,7 @@ Preview:
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-12" style="background:;">
+<slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
@@ -484,7 +516,7 @@ Preview:
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-13" style="background:;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
@@ -524,7 +556,7 @@ Preview:
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-14" style="background:;">
+<slide class="" id="slide-15" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
@@ -564,74 +596,37 @@ Preview:
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-15" style="background:;">
-  <hgroup>
-    <h2>Case Study: U.S. REDTI</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">summary(us_redti_consumption_tidy)    # Useful functions to examine data
-</code></pre>
-
-<pre><code>      Year         season    consumption  
- Min.   :1973   Winter:29   Min.   :-100  
- 1st Qu.:1980   Spring:29   1st Qu.:1686  
- Median :1987   Summer:29   Median :2104  
- Mean   :1987   Fall  :29   Mean   :2301  
- 3rd Qu.:1994               3rd Qu.:2678  
- Max.   :2001               Max.   :4406  
-</code></pre>
-
-<pre><code class="r">str(us_redti_consumption_tidy)        # Can also use RStudio GUI
-</code></pre>
-
-<pre><code>&#39;data.frame&#39;:   116 obs. of  3 variables:
- $ Year       : int  1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 ...
- $ season     : Factor w/ 4 levels &quot;Winter&quot;,&quot;Spring&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
- $ consumption: num  -100 3629 3628 3816 4375 ...
-</code></pre>
-
-<div class='left' style='float:left;width:50%'>
- 
-</div>
-<div class='right' style='float:right;width:50%'>
- 
-</div>
-<div class='foot' style='float:left;width:100%'>
- 
-</div>
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
 <slide class="" id="slide-16" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
   <article data-timings="">
-    <h3>Clean the data</h3>
+    <h3>Join the data frames</h3>
 
-<pre><code class="r"># identify the &quot;missing&quot; observations for consumption
-cons_missing &lt;- us_redti_consumption_tidy$consumption == -99.99
-# set the &quot;missing&quot; values to NA
-us_redti_consumption_tidy$consumption[cons_missing] &lt;- NA
-# check our work
-head(us_redti_consumption_tidy)
-</code></pre>
-
-<pre><code>  Year season consumption
-1 1973 Winter          NA
-2 1974 Winter        3629
-3 1975 Winter        3628
-4 1976 Winter        3816
-5 1977 Winter        4375
-6 1978 Winter        3954
-</code></pre>
+<p><code>plyr</code> has a function <code>join()</code></p>
 
 <div class='left' style='float:left;width:50%'>
- 
+ <pre><code class="r">us_redti_tidy &lt;- join(
+  us_redti_temp_index_tidy,
+  us_redti_consumption_tidy,
+  by = c(&quot;Year&quot;, &quot;season&quot;)
+)
+</code></pre>
+
 </div>
 <div class='right' style='float:right;width:50%'>
- 
+ <pre><code class="r">head(us_redti_tidy)
+</code></pre>
+
+<pre><code>  Year season temperature_index consumption
+1 1973 Winter             49.15      -99.99
+2 1974 Winter             35.99     3628.97
+3 1975 Winter             31.74     3627.84
+4 1976 Winter             33.83     3816.05
+5 1977 Winter             95.26     4374.53
+6 1978 Winter             92.63     3953.53
+</code></pre>
+
 </div>
 <div class='foot' style='float:left;width:100%'>
  
@@ -645,24 +640,26 @@ head(us_redti_consumption_tidy)
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
   <article data-timings="">
-    <h3>Clean the data</h3>
-
-<pre><code class="r"># identify the &quot;missing&quot; observations for temperature index
-temp_index_missing &lt;- us_redti_temp_index_tidy$temperature_index == -99.99
-# set the &quot;missing&quot; values to NA
-us_redti_temp_index_tidy$temperature_index[temp_index_missing] &lt;- NA
-# check our work
-summary(us_redti_temp_index_tidy)
+    <pre><code class="r">summary(us_redti_tidy)    # Useful functions to examine data
 </code></pre>
 
-<pre><code>      Year         season   temperature_index
- Min.   :1973   Winter:29   Min.   : 0.0     
- 1st Qu.:1980   Spring:29   1st Qu.:31.1     
- Median :1987   Summer:29   Median :44.8     
- Mean   :1987   Fall  :29   Mean   :45.9     
- 3rd Qu.:1994               3rd Qu.:59.1     
- Max.   :2001               Max.   :98.7     
-                            NA&#39;s   :2        
+<pre><code>      Year         season   temperature_index  consumption  
+ Min.   :1973   Winter:29   Min.   :-100.0    Min.   :-100  
+ 1st Qu.:1980   Spring:29   1st Qu.: 29.9     1st Qu.:1686  
+ Median :1987   Summer:29   Median : 44.1     Median :2104  
+ Mean   :1987   Fall  :29   Mean   : 43.4     Mean   :2301  
+ 3rd Qu.:1994               3rd Qu.: 58.5     3rd Qu.:2678  
+ Max.   :2001               Max.   : 98.7     Max.   :4406  
+</code></pre>
+
+<pre><code class="r">str(us_redti_tidy)        # Can also use RStudio GUI
+</code></pre>
+
+<pre><code>&#39;data.frame&#39;:   116 obs. of  4 variables:
+ $ Year             : int  1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 ...
+ $ season           : Factor w/ 4 levels &quot;Winter&quot;,&quot;Spring&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ temperature_index: num  49.1 36 31.7 33.8 95.3 ...
+ $ consumption      : num  -100 3629 3628 3816 4375 ...
 </code></pre>
 
 <div class='left' style='float:left;width:50%'>
@@ -679,6 +676,251 @@ summary(us_redti_temp_index_tidy)
 </slide>
 
 <slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Clean the data</h3>
+
+<p>In our dataset, <code>-99.99</code> denotes missing data. In R, <code>NA</code> is used for this purpose.</p>
+
+<p>Let&#39;s use a function to fix the &quot;missing&quot; values. This one was written by Hadley:</p>
+
+<pre><code class="r">fix_missing &lt;- function(x, na.value) {
+  x[x == na.value] &lt;- NA
+  x
+} 
+</code></pre>
+
+<p>This function:</p>
+
+<ul>
+<li><p>takes a vector, <code>x</code>, and a value, <code>na.value</code>.</p></li>
+<li><p>returns a vector replicating <code>x</code>, where <code>na.value</code> is replaced by <code>NA</code>. </p></li>
+</ul>
+
+<p>Hadley Wickham <i class="fa fa-link"></i> 
+<a href="http://adv-r.had.co.nz/Functional-programming.html">Advanced R: Functional Programming</a></p>
+
+<div class='left' style='float:left;width:50%'>
+ 
+</div>
+<div class='right' style='float:right;width:50%'>
+ 
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Clean the data</h3>
+
+<p>The <code>mutate()</code> function from the <code>plyr</code> package is useful.</p>
+
+<div class='left' style='float:left;width:35%'>
+ <pre><code class="r">na.value &lt;- -99.99
+us_redti_clean &lt;- mutate(
+  us_redti_tidy,
+  consumption = 
+    fix_missing(
+      consumption, 
+      na.value
+    ),
+  temperature_index = 
+    fix_missing(
+      temperature_index, 
+      na.value
+    )
+)
+</code></pre>
+
+</div>
+<div class='right' style='float:right;width:65%'>
+ <pre><code class="r">summary(us_redti_clean)
+</code></pre>
+
+<pre><code>      Year         season   temperature_index  consumption  
+ Min.   :1973   Winter:29   Min.   : 0.0      Min.   :1335  
+ 1st Qu.:1980   Spring:29   1st Qu.:31.1      1st Qu.:1725  
+ Median :1987   Summer:29   Median :44.8      Median :2135  
+ Mean   :1987   Fall  :29   Mean   :45.9      Mean   :2387  
+ 3rd Qu.:1994               3rd Qu.:59.1      3rd Qu.:2866  
+ Max.   :2001               Max.   :98.7      Max.   :4406  
+                            NA&#39;s   :2         NA&#39;s   :4     
+</code></pre>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div class='left' style='float:left;width:45%'>
+ <h3>Visualize data</h3>
+
+<p><code>qplot()</code> from <code>ggplot2</code> package</p>
+
+<pre><code class="r">plot_cons &lt;- qplot(
+  x = Year,
+  y = consumption,
+  color = season,
+  data = us_redti_clean
+)
+</code></pre>
+
+<pre><code class="r">plot_cons
+</code></pre>
+
+</div>
+<div class='right' style='float:right;width:55%'>
+ <p><img src="figure/unnamed-chunk-16.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" /></p>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div class='left' style='float:left;width:45%'>
+ <h3>Detrend data</h3>
+
+<p>We want to remove the time-trend effects to focus on the temperature-series effects</p>
+
+<pre><code class="r">after_1979 &lt;- 
+  us_redti_clean$Year &gt; 1979
+
+plot_cons + 
+  geom_smooth(
+    aes(x=Year, y=consumption),
+    data=us_redti_clean[after_1979, ],
+    method=&quot;lm&quot;
+  )
+</code></pre>
+
+</div>
+<div class='right' style='float:right;width:55%'>
+ <p><img src="figure/unnamed-chunk-18.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" style="display: block; margin: auto;" /></p>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div class='left' style='float:left;width:45%'>
+ <h3>Visualize data</h3>
+
+<p>Look at tempterature index</p>
+
+<pre><code class="r">plot_temp &lt;- qplot(
+  x = Year,
+  y = temperature_index,
+  color = season,
+  data = us_redti_clean
+) + facet_wrap(~ season)
+</code></pre>
+
+<pre><code class="r">plot_temp
+</code></pre>
+
+</div>
+<div class='right' style='float:right;width:55%'>
+ <p><img src="figure/unnamed-chunk-21.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" style="display: block; margin: auto;" /></p>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Model data</h3>
+
+<ul>
+<li><p>Let&#39;s look at winter</p></li>
+<li><p>We are not using the &quot;detrended&quot; data discussed at the website</p></li>
+<li><p>This model is only to demonstrate the <code>lm()</code> function</p></li>
+</ul>
+
+<pre><code class="r">season_spring &lt;- us_redti_clean$season == &quot;Spring&quot;
+
+model &lt;- lm(consumption ~ temperature_index, 
+            data = us_redti_clean[after_1979 &amp; season_spring, ])
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>
+Call:
+lm(formula = consumption ~ temperature_index, data = us_redti_clean[after_1979 &amp; 
+    season_spring, ])
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-214.0  -63.9  -13.3   81.3  184.1 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        2142.79      73.36   29.21   &lt;2e-16 ***
+temperature_index     4.04       1.35    3.01   0.0072 ** 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 120 on 19 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.322, Adjusted R-squared:  0.287 
+F-statistic: 9.04 on 1 and 19 DF,  p-value: 0.00725
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -700,14 +942,14 @@ summary(us_redti_temp_index_tidy)
 
 </div>
 <div class='foot' style='float:left;width:100%'>
- <p><i class="fa fa-link"></i> Source: <a href="http://www.eia.gov/energy_in_brief/article/major_energy_sources_and_users.cfm">U.S. Energy Information Administration</a></p>
+ <p>Source: <i class="fa fa-link"></i> <a href="http://www.eia.gov/energy_in_brief/article/major_energy_sources_and_users.cfm">U.S. Energy Information Administration</a></p>
 
 </div>
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-19" style="background:;">
+<slide class="" id="slide-26" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -722,20 +964,20 @@ us_energy_2012 &lt;- read.csv(&quot;http://ijlyttle.github.io/r_intro/data/us_en
 </code></pre>
 
 <pre><code class="r"># advanced
-install.packages(devtools)
+#install.packages(devtools)
 library(devtools, quietly=TRUE) # requires RTools from CRAN 
-install_github(repo=&quot;rCharts&quot;, username=&quot;ramnathv&quot;, ref=&quot;dev&quot;)
+#install_github(repo=&quot;rCharts&quot;, username=&quot;ramnathv&quot;, ref=&quot;dev&quot;)
 library(rCharts, quietly=TRUE)
 </code></pre>
 
 <p><br/>
-<i class="fa fa-link"></i> Preview: <a href="https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv">us_energy_2012.csv</a></p>
+ Preview: <i class="fa fa-link"></i> <a href="https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv">us_energy_2012.csv</a></p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-20" style="background:;">
+<slide class="" id="slide-27" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -762,7 +1004,7 @@ library(rCharts, quietly=TRUE)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-21" style="background:;">
+<slide class="" id="slide-28" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -791,7 +1033,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-22" style="background:;">
+<slide class="" id="slide-29" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -819,7 +1061,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-23" style="background:;">
+<slide class="" id="slide-30" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -852,7 +1094,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-24" style="background:;">
+<slide class="" id="slide-31" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -886,7 +1128,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-25" style="background:;">
+<slide class="" id="slide-32" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -920,12 +1162,12 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-26" style="background:;">
+<slide class="" id="slide-33" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r"># Using `rCharts` and `NVD3`
+    <pre><code class="r"># Using `rCharts` and `NVD3` (http://nvd3.org/)
 n1 &lt;- nPlot(consumption ~ source, group=&quot;sector&quot;, data=us_energy_2012, type=&#39;multiBarChart&#39;)
 n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
 </code></pre>
@@ -945,12 +1187,12 @@ n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-27" style="background:;">
+<slide class="" id="slide-34" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r"># Using `rCharts` and `NVD3`
+    <pre><code class="r"># Using `rCharts` and `NVD3` (http://nvd3.org/)
 n1 &lt;- nPlot(consumption ~ sector, group=&quot;source&quot;, data=us_energy_2012, type=&#39;multiBarChart&#39;)
 n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
 </code></pre>
@@ -970,7 +1212,7 @@ n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-28" style="background:;">
+<slide class="" id="slide-35" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -995,6 +1237,8 @@ sankeyPlot$set(
 )
 </code></pre>
 
+<p><i class="fa fa-link"></i> <a href="http://timelyportfolio.github.io/rCharts_d3_sankey/example_build_network_sankey.html">timelyportfolio Sankey diagrams</a></p>
+
 </div>
 <div class='right' style='float:right;width:40%'>
  <iframe src=figure/sankey_vis.html seamless></iframe>
@@ -1007,7 +1251,7 @@ sankeyPlot$set(
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-29" style="background:;">
+<slide class="" id="slide-36" style="background:;">
   <hgroup>
     <h2>Further Learning</h2>
   </hgroup>
@@ -1089,19 +1333,19 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Installation'>
+        data-slide=2 title='This presentation'>
          2
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='Tour of RStudio IDE'>
+        data-slide=3 title='Installation'>
          3
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Vectors'>
+        data-slide=4 title='Tour of RStudio IDE'>
          4
       </a>
     </li>
@@ -1113,31 +1357,31 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Lists'>
+        data-slide=6 title='Vectors'>
          6
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Data Frames'>
+        data-slide=7 title='Lists'>
          7
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Packages'>
+        data-slide=8 title='Data Frames'>
          8
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Package Installation'>
+        data-slide=9 title='Packages'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Case Study: U.S. REDTI'>
+        data-slide=10 title='Package Installation'>
          10
       </a>
     </li>
@@ -1185,43 +1429,43 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='Case Study: U.S. Energy 2012'>
+        data-slide=18 title='Case Study: U.S. REDTI'>
          18
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=19 title='Case Study: U.S. Energy 2012'>
+        data-slide=19 title='Case Study: U.S. REDTI'>
          19
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='Case Study: U.S. Energy 2012'>
+        data-slide=20 title='Case Study: U.S. REDTI'>
          20
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Case Study: U.S. Energy 2012'>
+        data-slide=21 title='Case Study: U.S. REDTI'>
          21
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='Case Study: U.S. Energy 2012'>
+        data-slide=22 title='Case Study: U.S. REDTI'>
          22
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Case Study: U.S. Energy 2012'>
+        data-slide=23 title='Case Study: U.S. REDTI'>
          23
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=24 title='Case Study: U.S. Energy 2012'>
+        data-slide=24 title='Case Study: U.S. REDTI'>
          24
       </a>
     </li>
@@ -1251,8 +1495,50 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=29 title='Further Learning'>
+        data-slide=29 title='Case Study: U.S. Energy 2012'>
          29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Case Study: U.S. Energy 2012'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Case Study: U.S. Energy 2012'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Case Study: U.S. Energy 2012'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='Case Study: U.S. Energy 2012'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Case Study: U.S. Energy 2012'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='Case Study: U.S. Energy 2012'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Further Learning'>
+         36
       </a>
     </li>
   </ul>

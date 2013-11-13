@@ -21,11 +21,11 @@ There are other options for open-source data analysis: Octave, Python, and Rapid
 
 This presentation focuses on R and RStudio:
 
-* R is an _outstanding_ tool for prototyping a data-analysis.
+* R is an <b>outstanding</b> tool for prototyping a data-analysis.
 
 * Everything demonstrated here is available without license fees.
 
-* There is an investment in yourself to learn. Learning, done properly, will be frustrating.
+* There is an investment in yourself to learn. It will be frustrating.
 
 * Exchange of programs and snippets is simple exchange of text.
 
@@ -39,6 +39,26 @@ Warning:
 <i class="fa fa-link"></i> [Python](http://www.python.org/)
 <i class="fa fa-link"></i> [Rapid Miner](http://rapidminer.com/) 
 
+---
+## This presentation
+
+### Philosohpy
+
+I want to show as many features as I can in an hour.
+
+An hour, even a week, is not enough time for thoughful discussion, demonstration, and practice.  
+
+I have tried to leave links to other references, so that you may learn at your pace.
+
+Everything in this presentation is reproducible - all the R code is shown.
+
+### More help (?$%^#!!)
+
+Google is your friend
+
+Stack Overflow (likely someone has already asked)
+
+Informal R networks at work
 
 ---
 ## Installation
@@ -57,6 +77,8 @@ Some helpful videos from Amanda Traud:
 
 * <i class="fa fa-youtube"></i> [Installing R](http://youtu.be/X_oFb2iAdu8)
 * <i class="fa fa-youtube"></i> [Installing RStudio](http://youtu.be/AZPbg29Plpw)
+
+
 
 --- &my_twocol  w1:33% w2:65%
 ## Tour of RStudio IDE
@@ -113,7 +135,7 @@ c(a, b)
 
 *** =foot
 
-<i class="fa fa-youtube"></i> GoogleDeveloplers:
+GoogleDeveloplers <i class="fa fa-youtube"></i> 
 [Create and Work With Vectors](http://youtu.be/YhQOV27pQfg)
 
 --- &my_twocol  w1:33% w2:65%
@@ -157,7 +179,7 @@ c(TRUE, FALSE)
 
 *** =foot
 
-<i class="fa fa-youtube"></i> GoogleDeveloplers:
+GoogleDeveloplers <i class="fa fa-youtube"></i> 
 [Character and Boolean Vectors](http://youtu.be/GKu5tw_bIpA)
 
 
@@ -195,7 +217,7 @@ a$title
 
 *** =foot
 
-<i class="fa fa-youtube"></i> GoogleDeveloplers:
+GoogleDeveloplers <i class="fa fa-youtube"></i> 
 [Lists](http://youtu.be/UffunYeERV0)
 
 --- &my_twocol  w1:33% w2:65%
@@ -207,9 +229,9 @@ This is where the "action" is.
 
 Data frames are lists where each member is a vector of the same length.
 
-The rows of are often called "observations".
+Rows often called "observations"
 
-The columns are often called "variables".
+Columns often called "variables"
 
 *** =right
 
@@ -232,12 +254,15 @@ a
 
 *** =foot
 
+To import a csv file into a data frame, use `read.csv()` function. 
+
+Be mindful of options such as `quote`, `header`.
+
 GoogleDeveloplers <i class="fa fa-youtube"></i>
 [Loading Data and Working With Data Frames](http://youtu.be/qK1ElUMkhq0)
 
 GoogleDeveloplers <i class="fa fa-youtube"></i>
 [Loading Data, Object Summaries, and Dates](http://youtu.be/cx_3zWo4sUs)
-
 
 ---
 ## Packages
@@ -266,9 +291,9 @@ Hadley Wickham's contribution is a set of useful packges that are well-written, 
 To install a package, you can use the command-line:
 
 ```r
-install_packages("reshape2")
-install_packages("plyr")
-install_packages("ggplot2")
+#install_packages("reshape2")
+#install_packages("plyr")
+#install_packages("ggplot2")
 ```
 
 To load a package:
@@ -282,12 +307,13 @@ require("ggplot2", quietly=TRUE)
 
 `require()` and `library()` are used interchangably.
 
-Using RStudio IDE: <i class="fa fa-youtube"></i> Andrew Jahn: [Installing Packages in R Studio](http://youtu.be/u1r5XTqrCTQ) 
+Using RStudio IDE: Andrew Jahn  <i class="fa fa-youtube"></i>
+[Installing Packages in R Studio](http://youtu.be/u1r5XTqrCTQ) 
 
 --- &my_twocol  w1:33% w2:65%
 ## Case Study: U.S. REDTI
 
-Residential Energy Demand Temperature Index
+### Residential Energy Demand Temperature Index
 
 *** =left
 
@@ -303,7 +329,7 @@ Demonstration of:
 
 * visualization using `ggplot2`
 
-* prediction using `predict`
+* prediction using `predict()`
 
 
 *** =right
@@ -351,8 +377,6 @@ Variables are stored in columns
 Observations are stored in rows
 
 Single type of experimental unit per dataset 
-
-
 
 *** =right
 
@@ -461,30 +485,68 @@ head(us_redti_temp_index_tidy)
 ---  &my_twocol  w1:50% w2:50%
 ## Case Study: U.S. REDTI
 
+### Join the data frames
+
+`plyr` has a function `join()`
+
+*** =left
+
 
 ```r
-summary(us_redti_consumption_tidy)    # Useful functions to examine data
+us_redti_tidy <- join(
+  us_redti_temp_index_tidy,
+  us_redti_consumption_tidy,
+  by = c("Year", "season")
+)
+```
+
+
+*** =right
+
+
+```r
+head(us_redti_tidy)
 ```
 
 ```
-      Year         season    consumption  
- Min.   :1973   Winter:29   Min.   :-100  
- 1st Qu.:1980   Spring:29   1st Qu.:1686  
- Median :1987   Summer:29   Median :2104  
- Mean   :1987   Fall  :29   Mean   :2301  
- 3rd Qu.:1994               3rd Qu.:2678  
- Max.   :2001               Max.   :4406  
+  Year season temperature_index consumption
+1 1973 Winter             49.15      -99.99
+2 1974 Winter             35.99     3628.97
+3 1975 Winter             31.74     3627.84
+4 1976 Winter             33.83     3816.05
+5 1977 Winter             95.26     4374.53
+6 1978 Winter             92.63     3953.53
+```
+
+
+---  &my_twocol  w1:50% w2:50%
+## Case Study: U.S. REDTI
+
+
+```r
+summary(us_redti_tidy)    # Useful functions to examine data
+```
+
+```
+      Year         season   temperature_index  consumption  
+ Min.   :1973   Winter:29   Min.   :-100.0    Min.   :-100  
+ 1st Qu.:1980   Spring:29   1st Qu.: 29.9     1st Qu.:1686  
+ Median :1987   Summer:29   Median : 44.1     Median :2104  
+ Mean   :1987   Fall  :29   Mean   : 43.4     Mean   :2301  
+ 3rd Qu.:1994               3rd Qu.: 58.5     3rd Qu.:2678  
+ Max.   :2001               Max.   : 98.7     Max.   :4406  
 ```
 
 ```r
-str(us_redti_consumption_tidy)        # Can also use RStudio GUI
+str(us_redti_tidy)        # Can also use RStudio GUI
 ```
 
 ```
-'data.frame':	116 obs. of  3 variables:
- $ Year       : int  1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 ...
- $ season     : Factor w/ 4 levels "Winter","Spring",..: 1 1 1 1 1 1 1 1 1 1 ...
- $ consumption: num  -100 3629 3628 3816 4375 ...
+'data.frame':	116 obs. of  4 variables:
+ $ Year             : int  1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 ...
+ $ season           : Factor w/ 4 levels "Winter","Spring",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ temperature_index: num  49.1 36 31.7 33.8 95.3 ...
+ $ consumption      : num  -100 3629 3628 3816 4375 ...
 ```
 
 
@@ -493,52 +555,214 @@ str(us_redti_consumption_tidy)        # Can also use RStudio GUI
 
 ### Clean the data
 
+In our dataset, `-99.99` denotes missing data. In R, `NA` is used for this purpose.
+
+Let's use a function to fix the "missing" values. This one was written by Hadley:
+
 
 ```r
-# identify the "missing" observations for consumption
-cons_missing <- us_redti_consumption_tidy$consumption == -99.99
-# set the "missing" values to NA
-us_redti_consumption_tidy$consumption[cons_missing] <- NA
-# check our work
-head(us_redti_consumption_tidy)
-```
-
-```
-  Year season consumption
-1 1973 Winter          NA
-2 1974 Winter        3629
-3 1975 Winter        3628
-4 1976 Winter        3816
-5 1977 Winter        4375
-6 1978 Winter        3954
+fix_missing <- function(x, na.value) {
+  x[x == na.value] <- NA
+  x
+} 
 ```
 
 
----  &my_twocol  w1:50% w2:50%
+This function:
+
+* takes a vector, `x`, and a value, `na.value`.
+
+* returns a vector replicating `x`, where `na.value` is replaced by `NA`. 
+
+Hadley Wickham <i class="fa fa-link"></i> 
+[Advanced R: Functional Programming](http://adv-r.had.co.nz/Functional-programming.html)
+
+
+---  &my_twocol  w1:35% w2:65%
 ## Case Study: U.S. REDTI
 
 ### Clean the data
 
+The `mutate()` function from the `plyr` package is useful.
+
+*** =left
+
 
 ```r
-# identify the "missing" observations for temperature index
-temp_index_missing <- us_redti_temp_index_tidy$temperature_index == -99.99
-# set the "missing" values to NA
-us_redti_temp_index_tidy$temperature_index[temp_index_missing] <- NA
-# check our work
-summary(us_redti_temp_index_tidy)
+na.value <- -99.99
+us_redti_clean <- mutate(
+  us_redti_tidy,
+  consumption = 
+    fix_missing(
+      consumption, 
+      na.value
+    ),
+  temperature_index = 
+    fix_missing(
+      temperature_index, 
+      na.value
+    )
+)
+```
+
+
+*** =right
+
+
+```r
+summary(us_redti_clean)
 ```
 
 ```
-      Year         season   temperature_index
- Min.   :1973   Winter:29   Min.   : 0.0     
- 1st Qu.:1980   Spring:29   1st Qu.:31.1     
- Median :1987   Summer:29   Median :44.8     
- Mean   :1987   Fall  :29   Mean   :45.9     
- 3rd Qu.:1994               3rd Qu.:59.1     
- Max.   :2001               Max.   :98.7     
-                            NA's   :2        
+      Year         season   temperature_index  consumption  
+ Min.   :1973   Winter:29   Min.   : 0.0      Min.   :1335  
+ 1st Qu.:1980   Spring:29   1st Qu.:31.1      1st Qu.:1725  
+ Median :1987   Summer:29   Median :44.8      Median :2135  
+ Mean   :1987   Fall  :29   Mean   :45.9      Mean   :2387  
+ 3rd Qu.:1994               3rd Qu.:59.1      3rd Qu.:2866  
+ Max.   :2001               Max.   :98.7      Max.   :4406  
+                            NA's   :2         NA's   :4     
 ```
+
+
+---  &my_twocol  w1:45% w2:55%
+## Case Study: U.S. REDTI
+
+*** =left
+
+### Visualize data
+
+`qplot()` from `ggplot2` package
+
+
+```r
+plot_cons <- qplot(
+  x = Year,
+  y = consumption,
+  color = season,
+  data = us_redti_clean
+)
+```
+
+
+
+```r
+plot_cons
+```
+
+
+*** =right
+
+<img src="figure/unnamed-chunk-16.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+
+
+---  &my_twocol  w1:45% w2:55%
+## Case Study: U.S. REDTI
+
+*** =left
+
+### Detrend data
+
+We want to remove the time-trend effects to focus on the temperature-series effects
+
+
+```r
+after_1979 <- 
+  us_redti_clean$Year > 1979
+
+plot_cons + 
+  geom_smooth(
+    aes(x=Year, y=consumption),
+    data=us_redti_clean[after_1979, ],
+    method="lm"
+  )
+```
+
+
+*** =right
+
+<img src="figure/unnamed-chunk-18.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" style="display: block; margin: auto;" />
+
+
+---  &my_twocol  w1:45% w2:55%
+## Case Study: U.S. REDTI
+
+*** =left
+
+### Visualize data
+
+Look at tempterature index
+
+
+```r
+plot_temp <- qplot(
+  x = Year,
+  y = temperature_index,
+  color = season,
+  data = us_redti_clean
+) + facet_wrap(~ season)
+```
+
+
+
+```r
+plot_temp
+```
+
+
+*** =right
+
+<img src="figure/unnamed-chunk-21.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" style="display: block; margin: auto;" />
+
+
+---
+## Case Study: U.S. REDTI
+
+### Model data
+
+* Let's look at winter
+
+* We are not using the "detrended" data discussed at the website
+
+* This model is only to demonstrate the `lm()` function
+
+
+```r
+season_spring <- us_redti_clean$season == "Spring"
+
+model <- lm(consumption ~ temperature_index, 
+            data = us_redti_clean[after_1979 & season_spring, ])
+```
+
+
+---
+## Case Study: U.S. REDTI
+
+
+```
+
+Call:
+lm(formula = consumption ~ temperature_index, data = us_redti_clean[after_1979 & 
+    season_spring, ])
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-214.0  -63.9  -13.3   81.3  184.1 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        2142.79      73.36   29.21   <2e-16 ***
+temperature_index     4.04       1.35    3.01   0.0072 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 120 on 19 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.322,	Adjusted R-squared:  0.287 
+F-statistic: 9.04 on 1 and 19 DF,  p-value: 0.00725
+```
+
+
 
 
 --- &my_twocol  w1:33% w2:65%
@@ -562,7 +786,7 @@ Demonstration of:
 
 *** =foot
 
-<i class="fa fa-link"></i> Source: [U.S. Energy Information Administration](http://www.eia.gov/energy_in_brief/article/major_energy_sources_and_users.cfm)
+Source: <i class="fa fa-link"></i> [U.S. Energy Information Administration](http://www.eia.gov/energy_in_brief/article/major_energy_sources_and_users.cfm)
 
 ---
 ## Case Study: U.S. Energy 2012
@@ -581,16 +805,16 @@ us_energy_2012 <- read.csv("http://ijlyttle.github.io/r_intro/data/us_energy_201
 
 ```r
 # advanced
-install.packages(devtools)
+#install.packages(devtools)
 library(devtools, quietly=TRUE) # requires RTools from CRAN 
-install_github(repo="rCharts", username="ramnathv", ref="dev")
+#install_github(repo="rCharts", username="ramnathv", ref="dev")
 library(rCharts, quietly=TRUE)
 ```
 
 
 
 <br/>
-<i class="fa fa-link"></i> Preview: [us_energy_2012.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv)
+ Preview: <i class="fa fa-link"></i> [us_energy_2012.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_energy_2012.csv)
 
 ---
 ## Case Study: U.S. Energy 2012
@@ -755,7 +979,7 @@ plot_3 <- qplot(
 
 
 ```r
-# Using `rCharts` and `NVD3`
+# Using `rCharts` and `NVD3` (http://nvd3.org/)
 n1 <- nPlot(consumption ~ source, group="sector", data=us_energy_2012, type='multiBarChart')
 n1$yAxis(axisLabel = "consumption (quads)", width=45)
 ```
@@ -769,7 +993,7 @@ n1$yAxis(axisLabel = "consumption (quads)", width=45)
 
 
 ```r
-# Using `rCharts` and `NVD3`
+# Using `rCharts` and `NVD3` (http://nvd3.org/)
 n1 <- nPlot(consumption ~ sector, group="source", data=us_energy_2012, type='multiBarChart')
 n1$yAxis(axisLabel = "consumption (quads)", width=45)
 ```
@@ -802,6 +1026,7 @@ sankeyPlot$set(
 ```
 
 
+<i class="fa fa-link"></i> [timelyportfolio Sankey diagrams](http://timelyportfolio.github.io/rCharts_d3_sankey/example_build_network_sankey.html)
 *** =right
 
 <iframe src=figure/sankey_vis.html seamless></iframe>
