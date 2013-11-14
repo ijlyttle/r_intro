@@ -416,11 +416,12 @@ require(&quot;ggplot2&quot;, quietly=TRUE)
 
 <ul>
 <li><p>import using <code>read.csv()</code></p></li>
-<li><p>tidy data </p></li>
+<li><p>tidy data</p></li>
+<li><p>use of functions to clean data</p></li>
 <li><p>subsetting</p></li>
-<li><p>modeling using <code>lm()</code></p></li>
 <li><p>visualization using <code>ggplot2</code></p></li>
-<li><p>prediction using <code>predict()</code></p></li>
+<li><p>modeling using <code>lm()</code></p></li>
+<li><p>prediction using <code>predict()</code>, <code>resid()</code></p></li>
 </ul>
 
 </div>
@@ -448,17 +449,14 @@ library(reshape2, quietly=TRUE)
 library(plyr, quietly=TRUE)
 library(ggplot2, quietly=TRUE)
 
-# read these csv files; parse into data frames 
-us_redti_consumption &lt;- 
+# read this csv files; parse into data frame
+us_redti_raw &lt;- 
   read.csv(&quot;http://ijlyttle.github.io/r_intro/data/us_redti_consumption.csv&quot;)
-us_redti_temp_index &lt;- 
-  read.csv(&quot;http://ijlyttle.github.io/r_intro/data/us_redti_temp_index.csv&quot;)
 </code></pre>
 
 <p><br/>
 Preview: 
-<i class="fa fa-link"></i> <a href="https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_consumption.csv">us_redti_consumption.csv</a> 
-<i class="fa fa-link"></i> <a href="https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_temp_index.csv">us_redti_temp_index.csv</a></p>
+<i class="fa fa-link"></i> <a href="https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_consumption.csv">us_redti_consumption.csv</a> </p>
 
 <div class='left' style='float:left;width:33%'>
  
@@ -490,7 +488,7 @@ Preview:
 
 </div>
 <div class='right' style='float:right;width:50%'>
- <pre><code class="r">head(us_redti_consumption)
+ <pre><code class="r">head(us_redti_raw)
 </code></pre>
 
 <pre><code>  Year  Winter Spring Summer Fall
@@ -526,8 +524,8 @@ Preview:
 <p><code>reshape2</code> provides some tidying tools, such as the <code>melt()</code> function.</p>
 
 <div class='left' style='float:left;width:50%'>
- <pre><code class="r">us_redti_consumption_tidy &lt;- melt(
-  us_redti_consumption, 
+ <pre><code class="r">us_redti_tidy &lt;- melt(
+  us_redti_raw, 
   id.vars = &quot;Year&quot;,
   variable.name = &quot;season&quot;,
   value.name = &quot;consumption&quot;
@@ -536,7 +534,7 @@ Preview:
 
 </div>
 <div class='right' style='float:right;width:50%'>
- <pre><code class="r">head(us_redti_consumption_tidy)
+ <pre><code class="r">head(us_redti_tidy)
 </code></pre>
 
 <pre><code>  Year season consumption
@@ -561,33 +559,32 @@ Preview:
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
   <article data-timings="">
-    <h3>Tidy the data</h3>
+    <pre><code class="r">summary(us_redti_tidy)    # Useful functions to examine data
+</code></pre>
 
-<p>Similarly, the temperature-index data frame is tidied.</p>
+<pre><code>      Year         season    consumption  
+ Min.   :1973   Winter:29   Min.   :-100  
+ 1st Qu.:1980   Spring:29   1st Qu.:1686  
+ Median :1987   Summer:29   Median :2104  
+ Mean   :1987   Fall  :29   Mean   :2301  
+ 3rd Qu.:1994               3rd Qu.:2678  
+ Max.   :2001               Max.   :4406  
+</code></pre>
+
+<pre><code class="r">str(us_redti_tidy)        # Can also use RStudio GUI
+</code></pre>
+
+<pre><code>&#39;data.frame&#39;:   116 obs. of  3 variables:
+ $ Year       : int  1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 ...
+ $ season     : Factor w/ 4 levels &quot;Winter&quot;,&quot;Spring&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ consumption: num  -100 3629 3628 3816 4375 ...
+</code></pre>
 
 <div class='left' style='float:left;width:50%'>
- <pre><code class="r">us_redti_temp_index_tidy &lt;- melt(
-  us_redti_temp_index, 
-  id.vars = &quot;Year&quot;,
-  variable.name = &quot;season&quot;,
-  value.name = &quot;temperature_index&quot;
-)
-</code></pre>
-
+ 
 </div>
 <div class='right' style='float:right;width:50%'>
- <pre><code class="r">head(us_redti_temp_index_tidy)
-</code></pre>
-
-<pre><code>  Year season temperature_index
-1 1973 Winter             49.15
-2 1974 Winter             35.99
-3 1975 Winter             31.74
-4 1976 Winter             33.83
-5 1977 Winter             95.26
-6 1978 Winter             92.63
-</code></pre>
-
+ 
 </div>
 <div class='foot' style='float:left;width:100%'>
  
@@ -597,85 +594,6 @@ Preview:
 </slide>
 
 <slide class="" id="slide-16" style="background:;">
-  <hgroup>
-    <h2>Case Study: U.S. REDTI</h2>
-  </hgroup>
-  <article data-timings="">
-    <h3>Join the data frames</h3>
-
-<p><code>plyr</code> has a function <code>join()</code></p>
-
-<div class='left' style='float:left;width:50%'>
- <pre><code class="r">us_redti_tidy &lt;- join(
-  us_redti_temp_index_tidy,
-  us_redti_consumption_tidy,
-  by = c(&quot;Year&quot;, &quot;season&quot;)
-)
-</code></pre>
-
-</div>
-<div class='right' style='float:right;width:50%'>
- <pre><code class="r">head(us_redti_tidy)
-</code></pre>
-
-<pre><code>  Year season temperature_index consumption
-1 1973 Winter             49.15      -99.99
-2 1974 Winter             35.99     3628.97
-3 1975 Winter             31.74     3627.84
-4 1976 Winter             33.83     3816.05
-5 1977 Winter             95.26     4374.53
-6 1978 Winter             92.63     3953.53
-</code></pre>
-
-</div>
-<div class='foot' style='float:left;width:100%'>
- 
-</div>
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-17" style="background:;">
-  <hgroup>
-    <h2>Case Study: U.S. REDTI</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">summary(us_redti_tidy)    # Useful functions to examine data
-</code></pre>
-
-<pre><code>      Year         season   temperature_index  consumption  
- Min.   :1973   Winter:29   Min.   :-100.0    Min.   :-100  
- 1st Qu.:1980   Spring:29   1st Qu.: 29.9     1st Qu.:1686  
- Median :1987   Summer:29   Median : 44.1     Median :2104  
- Mean   :1987   Fall  :29   Mean   : 43.4     Mean   :2301  
- 3rd Qu.:1994               3rd Qu.: 58.5     3rd Qu.:2678  
- Max.   :2001               Max.   : 98.7     Max.   :4406  
-</code></pre>
-
-<pre><code class="r">str(us_redti_tidy)        # Can also use RStudio GUI
-</code></pre>
-
-<pre><code>&#39;data.frame&#39;:   116 obs. of  4 variables:
- $ Year             : int  1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 ...
- $ season           : Factor w/ 4 levels &quot;Winter&quot;,&quot;Spring&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
- $ temperature_index: num  49.1 36 31.7 33.8 95.3 ...
- $ consumption      : num  -100 3629 3628 3816 4375 ...
-</code></pre>
-
-<div class='left' style='float:left;width:50%'>
- 
-</div>
-<div class='right' style='float:right;width:50%'>
- 
-</div>
-<div class='foot' style='float:left;width:100%'>
- 
-</div>
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
@@ -715,7 +633,7 @@ Preview:
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-19" style="background:;">
+<slide class="" id="slide-17" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
@@ -731,12 +649,7 @@ us_redti_clean &lt;- mutate(
   consumption = 
     fix_missing(
       consumption, 
-      na.value
-    ),
-  temperature_index = 
-    fix_missing(
-      temperature_index, 
-      na.value
+      -99.99
     )
 )
 </code></pre>
@@ -746,14 +659,14 @@ us_redti_clean &lt;- mutate(
  <pre><code class="r">summary(us_redti_clean)
 </code></pre>
 
-<pre><code>      Year         season   temperature_index  consumption  
- Min.   :1973   Winter:29   Min.   : 0.0      Min.   :1335  
- 1st Qu.:1980   Spring:29   1st Qu.:31.1      1st Qu.:1725  
- Median :1987   Summer:29   Median :44.8      Median :2135  
- Mean   :1987   Fall  :29   Mean   :45.9      Mean   :2387  
- 3rd Qu.:1994               3rd Qu.:59.1      3rd Qu.:2866  
- Max.   :2001               Max.   :98.7      Max.   :4406  
-                            NA&#39;s   :2         NA&#39;s   :4     
+<pre><code>      Year         season    consumption  
+ Min.   :1973   Winter:29   Min.   :1335  
+ 1st Qu.:1980   Spring:29   1st Qu.:1725  
+ Median :1987   Summer:29   Median :2135  
+ Mean   :1987   Fall  :29   Mean   :2387  
+ 3rd Qu.:1994               3rd Qu.:2866  
+ Max.   :2001               Max.   :4406  
+                            NA&#39;s   :4     
 </code></pre>
 
 </div>
@@ -764,7 +677,7 @@ us_redti_clean &lt;- mutate(
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-20" style="background:;">
+<slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
@@ -788,8 +701,72 @@ us_redti_clean &lt;- mutate(
 
 </div>
 <div class='right' style='float:right;width:55%'>
- <p><img src="figure/unnamed-chunk-16.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" /></p>
+ <p><img src="figure/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" /></p>
 
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div class='left' style='float:left;width:45%'>
+ <h3>Detrend data</h3>
+
+<p>We want to remove the time-trend effects for data after 1979.</p>
+
+<pre><code class="r">plot_cons + 
+  geom_smooth(
+    data = us_redti_clean[
+      us_redti_clean$Year &gt; 1979, 
+    ],
+    method = &quot;lm&quot;
+  )
+</code></pre>
+
+</div>
+<div class='right' style='float:right;width:55%'>
+ <p><img src="figure/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" /></p>
+
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Focus on data for winter, after-1979</p>
+
+<pre><code class="r">us_redti_later &lt;- us_redti_clean[us_redti_clean$Year &gt; 1979, ]
+us_redti_later_winter &lt;- us_redti_later[us_redti_later$season == &quot;Winter&quot;, ]
+
+model_time_winter &lt;- lm(consumption ~ Year, data = us_redti_later_winter)
+coef(summary(model_time_winter))
+</code></pre>
+
+<pre><code>             Estimate Std. Error t value  Pr(&gt;|t|)
+(Intercept) -56817.64  12327.119  -4.609 1.697e-04
+Year            30.38      6.193   4.906 8.531e-05
+</code></pre>
+
+<div class='left' style='float:left;width:45%'>
+ 
+</div>
+<div class='right' style='float:right;width:55%'>
+ 
 </div>
 <div class='foot' style='float:left;width:100%'>
  
@@ -803,26 +780,41 @@ us_redti_clean &lt;- mutate(
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
   <article data-timings="">
-    
-<div class='left' style='float:left;width:45%'>
- <h3>Detrend data</h3>
+    <p>Let&#39;s create a new data frame using de-trended consumption</p>
 
-<p>We want to remove the time-trend effects to focus on the temperature-series effects</p>
+<div class='left' style='float:left;width:55%'>
+ <pre><code class="r">consumption_baseline &lt;- 
+  predict(model_time_winter, 
+          newdata=data.frame(Year = 1980))
 
-<pre><code class="r">after_1979 &lt;- 
-  us_redti_clean$Year &gt; 1979
+consumption_baseline
+</code></pre>
 
-plot_cons + 
-  geom_smooth(
-    aes(x=Year, y=consumption),
-    data=us_redti_clean[after_1979, ],
-    method=&quot;lm&quot;
-  )
+<pre><code>   1 
+3341 
+</code></pre>
+
+<pre><code class="r">us_redti_later_winter_dt &lt;- mutate(
+  us_redti_later_winter,
+  detrended = TRUE,
+  consumption = consumption_baseline +
+    resid(model_time_winter) 
+)
 </code></pre>
 
 </div>
-<div class='right' style='float:right;width:55%'>
- <p><img src="figure/unnamed-chunk-18.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" style="display: block; margin: auto;" /></p>
+<div class='right' style='float:right;width:45%'>
+ <pre><code class="r">head(us_redti_later_winter_dt)
+</code></pre>
+
+<pre><code>   Year season consumption detrended
+8  1980 Winter        3472      TRUE
+9  1981 Winter        3600      TRUE
+10 1982 Winter        3476      TRUE
+11 1983 Winter        3194      TRUE
+12 1984 Winter        3317      TRUE
+13 1985 Winter        3313      TRUE
+</code></pre>
 
 </div>
 <div class='foot' style='float:left;width:100%'>
@@ -837,26 +829,29 @@ plot_cons +
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
   <article data-timings="">
-    
+    <p>Let&#39;s create a new data frame using de-trended consumption</p>
+
 <div class='left' style='float:left;width:45%'>
- <h3>Visualize data</h3>
+ <pre><code class="r">us_redti_later_winter$detrended &lt;- FALSE
+us_redti_combined &lt;- rbind(
+  us_redti_later_winter,
+  us_redti_later_winter_dt
+)
 
-<p>Look at tempterature index</p>
-
-<pre><code class="r">plot_temp &lt;- qplot(
-  x = Year,
-  y = temperature_index,
-  color = season,
-  data = us_redti_clean
-) + facet_wrap(~ season)
-</code></pre>
-
-<pre><code class="r">plot_temp
+plot_detrend &lt;- 
+  qplot(
+    x = Year,
+    y = consumption,
+    color = detrended,
+    data = us_redti_combined,
+    geom = &quot;point&quot;
+  ) + 
+  geom_smooth(method=&quot;lm&quot;)
 </code></pre>
 
 </div>
 <div class='right' style='float:right;width:55%'>
- <p><img src="figure/unnamed-chunk-21.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" style="display: block; margin: auto;" /></p>
+ <p><img src="figure/unnamed-chunk-19.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" style="display: block; margin: auto;" /></p>
 
 </div>
 <div class='foot' style='float:left;width:100%'>
@@ -867,60 +862,6 @@ plot_cons +
 </slide>
 
 <slide class="" id="slide-23" style="background:;">
-  <hgroup>
-    <h2>Case Study: U.S. REDTI</h2>
-  </hgroup>
-  <article data-timings="">
-    <h3>Model data</h3>
-
-<ul>
-<li><p>Let&#39;s look at winter</p></li>
-<li><p>We are not using the &quot;detrended&quot; data discussed at the website</p></li>
-<li><p>This model is only to demonstrate the <code>lm()</code> function</p></li>
-</ul>
-
-<pre><code class="r">season_spring &lt;- us_redti_clean$season == &quot;Spring&quot;
-
-model &lt;- lm(consumption ~ temperature_index, 
-            data = us_redti_clean[after_1979 &amp; season_spring, ])
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-24" style="background:;">
-  <hgroup>
-    <h2>Case Study: U.S. REDTI</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code>
-Call:
-lm(formula = consumption ~ temperature_index, data = us_redti_clean[after_1979 &amp; 
-    season_spring, ])
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--214.0  -63.9  -13.3   81.3  184.1 
-
-Coefficients:
-                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)        2142.79      73.36   29.21   &lt;2e-16 ***
-temperature_index     4.04       1.35    3.01   0.0072 ** 
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 120 on 19 degrees of freedom
-  (1 observation deleted due to missingness)
-Multiple R-squared:  0.322, Adjusted R-squared:  0.287 
-F-statistic: 9.04 on 1 and 19 DF,  p-value: 0.00725
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-25" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -949,7 +890,7 @@ F-statistic: 9.04 on 1 and 19 DF,  p-value: 0.00725
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-26" style="background:;">
+<slide class="" id="slide-24" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -977,7 +918,7 @@ library(rCharts, quietly=TRUE)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-27" style="background:;">
+<slide class="" id="slide-25" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1004,7 +945,7 @@ library(rCharts, quietly=TRUE)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-28" style="background:;">
+<slide class="" id="slide-26" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1033,7 +974,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-29" style="background:;">
+<slide class="" id="slide-27" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1061,7 +1002,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-30" style="background:;">
+<slide class="" id="slide-28" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1094,7 +1035,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-31" style="background:;">
+<slide class="" id="slide-29" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1128,7 +1069,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-32" style="background:;">
+<slide class="" id="slide-30" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1162,7 +1103,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-33" style="background:;">
+<slide class="" id="slide-31" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1187,7 +1128,7 @@ n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-34" style="background:;">
+<slide class="" id="slide-32" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1212,7 +1153,7 @@ n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-35" style="background:;">
+<slide class="" id="slide-33" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1251,7 +1192,7 @@ sankeyPlot$set(
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-36" style="background:;">
+<slide class="" id="slide-34" style="background:;">
   <hgroup>
     <h2>Further Learning</h2>
   </hgroup>
@@ -1459,13 +1400,13 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Case Study: U.S. REDTI'>
+        data-slide=23 title='Case Study: U.S. Energy 2012'>
          23
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=24 title='Case Study: U.S. REDTI'>
+        data-slide=24 title='Case Study: U.S. Energy 2012'>
          24
       </a>
     </li>
@@ -1525,20 +1466,8 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=34 title='Case Study: U.S. Energy 2012'>
+        data-slide=34 title='Further Learning'>
          34
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=35 title='Case Study: U.S. Energy 2012'>
-         35
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=36 title='Further Learning'>
-         36
       </a>
     </li>
   </ul>

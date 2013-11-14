@@ -254,20 +254,22 @@ Demonstration of:
 
 * import using `read.csv()`
 
-* tidy data 
+* tidy data
+
+* use of functions to clean data
 
 * subsetting
 
-* modeling using `lm()`
-
 * visualization using `ggplot2`
 
-* prediction using `predict()`
+* modeling using `lm()`
+
+* prediction using `predict()`, `resid()`
 
 
 *** =right
 
- <img src="figure/us_redti_spring.jpg", width="85%"/>
+<img src="figure/us_redti_spring.jpg", width="85%"/>
 
 *** =foot
 
@@ -284,17 +286,14 @@ library(reshape2, quietly=TRUE)
 library(plyr, quietly=TRUE)
 library(ggplot2, quietly=TRUE)
 
-# read these csv files; parse into data frames 
-us_redti_consumption <- 
+# read this csv files; parse into data frame
+us_redti_raw <- 
   read.csv("http://ijlyttle.github.io/r_intro/data/us_redti_consumption.csv")
-us_redti_temp_index <- 
-  read.csv("http://ijlyttle.github.io/r_intro/data/us_redti_temp_index.csv")
 ```
 
 <br/>
 Preview: 
 <i class="fa fa-link"></i> [us_redti_consumption.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_consumption.csv) 
-<i class="fa fa-link"></i> [us_redti_temp_index.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_temp_index.csv)
 
 ---  &my_twocol  w1:50% w2:50%
 ## Case Study: U.S. REDTI
@@ -312,7 +311,7 @@ Single type of experimental unit per dataset
 *** =right
 
 ```{r}
-head(us_redti_consumption)
+head(us_redti_raw)
 ```
 
 This is <b>not</b> tidy data.
@@ -335,58 +334,11 @@ Hadley Wickham <i class="fa fa-vimeo-square"></i> [Tidy Data](http://vimeo.com/3
 *** =left
 
 ```{r}
-us_redti_consumption_tidy <- melt(
-  us_redti_consumption, 
+us_redti_tidy <- melt(
+  us_redti_raw, 
   id.vars = "Year",
   variable.name = "season",
   value.name = "consumption"
-)
-```
-
-*** =right
-
-```{r}
-head(us_redti_consumption_tidy)
-```
-
----  &my_twocol  w1:50% w2:50%
-## Case Study: U.S. REDTI
-
-### Tidy the data
-
-Similarly, the temperature-index data frame is tidied.
-
-*** =left
-
-```{r}
-us_redti_temp_index_tidy <- melt(
-  us_redti_temp_index, 
-  id.vars = "Year",
-  variable.name = "season",
-  value.name = "temperature_index"
-)
-```
-
-*** =right
-
-```{r}
-head(us_redti_temp_index_tidy)
-```
-
----  &my_twocol  w1:50% w2:50%
-## Case Study: U.S. REDTI
-
-### Join the data frames
-
-`plyr` has a function `join()`
-
-*** =left
-
-```{r}
-us_redti_tidy <- join(
-  us_redti_temp_index_tidy,
-  us_redti_consumption_tidy,
-  by = c("Year", "season")
 )
 ```
 
@@ -446,12 +398,7 @@ us_redti_clean <- mutate(
   consumption = 
     fix_missing(
       consumption, 
-      na.value
-    ),
-  temperature_index = 
-    fix_missing(
-      temperature_index, 
-      na.value
+      -99.99
     )
 )
 ```
@@ -497,29 +444,25 @@ plot_cons
 
 ### Detrend data
 
-We want to remove the time-trend effects to focus on the temperature effects
+We want to remove the time-trend effects for data after 1979.
 
 ```{r, eval=FALSE}
-after_1979 <- 
-  us_redti_clean$Year > 1979
-
 plot_cons + 
   geom_smooth(
-    aes(x=Year, y=consumption),
-    data=us_redti_clean[after_1979, ],
-    method="lm"
+    data = us_redti_clean[
+      us_redti_clean$Year > 1979, 
+    ],
+    method = "lm"
   )
 ```
 
 *** =right
 
 ```{r, echo=FALSE, warning=FALSE}
-after_1979 <- 
-  us_redti_clean$Year > 1979
 plot_cons + 
   geom_smooth(
     aes(x=Year, y=consumption),
-    data=us_redti_clean[after_1979, ],
+    data=us_redti_clean[us_redti_clean$Year > 1979, ],
     method="lm"
   )
 ```
@@ -527,57 +470,73 @@ plot_cons +
 ---  &my_twocol  w1:45% w2:55%
 ## Case Study: U.S. REDTI
 
-*** =left
-
-### Visualize data
-
-Look at tempterature index
+Focus on data for winter, after-1979
 
 ```{r}
-plot_temp <- qplot(
-  x = Year,
-  y = temperature_index,
-  color = season,
-  data = us_redti_clean
-) + facet_wrap(~ season)
+us_redti_later <- us_redti_clean[us_redti_clean$Year > 1979, ]
+us_redti_later_winter <- us_redti_later[us_redti_later$season == "Winter", ]
+
+model_time_winter <- lm(consumption ~ Year, data = us_redti_later_winter)
+coef(summary(model_time_winter))
 ```
 
-```{r, eval=FALSE}
-plot_temp
+---  &my_twocol  w1:55% w2:45%
+## Case Study: U.S. REDTI
+
+Let's create a new data frame using de-trended consumption
+
+*** =left
+
+```{r}
+consumption_baseline <- 
+  predict(model_time_winter, 
+          newdata=data.frame(Year = 1980))
+
+consumption_baseline
+us_redti_later_winter_dt <- mutate(
+  us_redti_later_winter,
+  detrended = TRUE,
+  consumption = consumption_baseline +
+    resid(model_time_winter) 
+)
 ```
 
 *** =right
 
-```{r, echo=FALSE, warning=FALSE}
-plot_temp
+```{r}
+head(us_redti_later_winter_dt)
 ```
 
----
+---  &my_twocol  w1:45% w2:55%
 ## Case Study: U.S. REDTI
 
-### Model data
+Let's create a new data frame using de-trended consumption
 
-* Let's look at winter
-
-* We are not using the "detrended" data discussed at the website
-
-* This model is only to demonstrate the `lm()` function
+*** =left
 
 ```{r}
-season_spring <- us_redti_clean$season == "Spring"
+us_redti_later_winter$detrended <- FALSE
+us_redti_combined <- rbind(
+  us_redti_later_winter,
+  us_redti_later_winter_dt
+)
 
-model <- lm(consumption ~ temperature_index, 
-            data = us_redti_clean[after_1979 & season_spring, ])
+plot_detrend <- 
+  qplot(
+    x = Year,
+    y = consumption,
+    color = detrended,
+    data = us_redti_combined,
+    geom = "point"
+  ) + 
+  geom_smooth(method="lm")
 ```
 
----
-## Case Study: U.S. REDTI
+*** =right
 
-```{r echo=FALSE}
-summary(model)
+```{r,echo=FALSE}
+ plot_detrend
 ```
-
-
 
 --- &my_twocol  w1:33% w2:65%
 ## Case Study: U.S. Energy 2012

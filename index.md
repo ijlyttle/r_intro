@@ -321,20 +321,22 @@ Demonstration of:
 
 * import using `read.csv()`
 
-* tidy data 
+* tidy data
+
+* use of functions to clean data
 
 * subsetting
 
-* modeling using `lm()`
-
 * visualization using `ggplot2`
 
-* prediction using `predict()`
+* modeling using `lm()`
+
+* prediction using `predict()`, `resid()`
 
 
 *** =right
 
- <img src="figure/us_redti_spring.jpg", width="85%"/>
+<img src="figure/us_redti_spring.jpg", width="85%"/>
 
 *** =foot
 
@@ -352,18 +354,15 @@ library(reshape2, quietly=TRUE)
 library(plyr, quietly=TRUE)
 library(ggplot2, quietly=TRUE)
 
-# read these csv files; parse into data frames 
-us_redti_consumption <- 
+# read this csv files; parse into data frame
+us_redti_raw <- 
   read.csv("http://ijlyttle.github.io/r_intro/data/us_redti_consumption.csv")
-us_redti_temp_index <- 
-  read.csv("http://ijlyttle.github.io/r_intro/data/us_redti_temp_index.csv")
 ```
 
 
 <br/>
 Preview: 
 <i class="fa fa-link"></i> [us_redti_consumption.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_consumption.csv) 
-<i class="fa fa-link"></i> [us_redti_temp_index.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_temp_index.csv)
 
 ---  &my_twocol  w1:50% w2:50%
 ## Case Study: U.S. REDTI
@@ -382,7 +381,7 @@ Single type of experimental unit per dataset
 
 
 ```r
-head(us_redti_consumption)
+head(us_redti_raw)
 ```
 
 ```
@@ -417,8 +416,8 @@ Hadley Wickham <i class="fa fa-vimeo-square"></i> [Tidy Data](http://vimeo.com/3
 
 
 ```r
-us_redti_consumption_tidy <- melt(
-  us_redti_consumption, 
+us_redti_tidy <- melt(
+  us_redti_raw, 
   id.vars = "Year",
   variable.name = "season",
   value.name = "consumption"
@@ -430,7 +429,7 @@ us_redti_consumption_tidy <- melt(
 
 
 ```r
-head(us_redti_consumption_tidy)
+head(us_redti_tidy)
 ```
 
 ```
@@ -447,94 +446,19 @@ head(us_redti_consumption_tidy)
 ---  &my_twocol  w1:50% w2:50%
 ## Case Study: U.S. REDTI
 
-### Tidy the data
-
-Similarly, the temperature-index data frame is tidied.
-
-*** =left
-
-
-```r
-us_redti_temp_index_tidy <- melt(
-  us_redti_temp_index, 
-  id.vars = "Year",
-  variable.name = "season",
-  value.name = "temperature_index"
-)
-```
-
-
-*** =right
-
-
-```r
-head(us_redti_temp_index_tidy)
-```
-
-```
-  Year season temperature_index
-1 1973 Winter             49.15
-2 1974 Winter             35.99
-3 1975 Winter             31.74
-4 1976 Winter             33.83
-5 1977 Winter             95.26
-6 1978 Winter             92.63
-```
-
-
----  &my_twocol  w1:50% w2:50%
-## Case Study: U.S. REDTI
-
-### Join the data frames
-
-`plyr` has a function `join()`
-
-*** =left
-
-
-```r
-us_redti_tidy <- join(
-  us_redti_temp_index_tidy,
-  us_redti_consumption_tidy,
-  by = c("Year", "season")
-)
-```
-
-
-*** =right
-
-
-```r
-head(us_redti_tidy)
-```
-
-```
-  Year season temperature_index consumption
-1 1973 Winter             49.15      -99.99
-2 1974 Winter             35.99     3628.97
-3 1975 Winter             31.74     3627.84
-4 1976 Winter             33.83     3816.05
-5 1977 Winter             95.26     4374.53
-6 1978 Winter             92.63     3953.53
-```
-
-
----  &my_twocol  w1:50% w2:50%
-## Case Study: U.S. REDTI
-
 
 ```r
 summary(us_redti_tidy)    # Useful functions to examine data
 ```
 
 ```
-      Year         season   temperature_index  consumption  
- Min.   :1973   Winter:29   Min.   :-100.0    Min.   :-100  
- 1st Qu.:1980   Spring:29   1st Qu.: 29.9     1st Qu.:1686  
- Median :1987   Summer:29   Median : 44.1     Median :2104  
- Mean   :1987   Fall  :29   Mean   : 43.4     Mean   :2301  
- 3rd Qu.:1994               3rd Qu.: 58.5     3rd Qu.:2678  
- Max.   :2001               Max.   : 98.7     Max.   :4406  
+      Year         season    consumption  
+ Min.   :1973   Winter:29   Min.   :-100  
+ 1st Qu.:1980   Spring:29   1st Qu.:1686  
+ Median :1987   Summer:29   Median :2104  
+ Mean   :1987   Fall  :29   Mean   :2301  
+ 3rd Qu.:1994               3rd Qu.:2678  
+ Max.   :2001               Max.   :4406  
 ```
 
 ```r
@@ -542,11 +466,10 @@ str(us_redti_tidy)        # Can also use RStudio GUI
 ```
 
 ```
-'data.frame':	116 obs. of  4 variables:
- $ Year             : int  1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 ...
- $ season           : Factor w/ 4 levels "Winter","Spring",..: 1 1 1 1 1 1 1 1 1 1 ...
- $ temperature_index: num  49.1 36 31.7 33.8 95.3 ...
- $ consumption      : num  -100 3629 3628 3816 4375 ...
+'data.frame':	116 obs. of  3 variables:
+ $ Year       : int  1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 ...
+ $ season     : Factor w/ 4 levels "Winter","Spring",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ consumption: num  -100 3629 3628 3816 4375 ...
 ```
 
 
@@ -595,12 +518,7 @@ us_redti_clean <- mutate(
   consumption = 
     fix_missing(
       consumption, 
-      na.value
-    ),
-  temperature_index = 
-    fix_missing(
-      temperature_index, 
-      na.value
+      -99.99
     )
 )
 ```
@@ -614,14 +532,14 @@ summary(us_redti_clean)
 ```
 
 ```
-      Year         season   temperature_index  consumption  
- Min.   :1973   Winter:29   Min.   : 0.0      Min.   :1335  
- 1st Qu.:1980   Spring:29   1st Qu.:31.1      1st Qu.:1725  
- Median :1987   Summer:29   Median :44.8      Median :2135  
- Mean   :1987   Fall  :29   Mean   :45.9      Mean   :2387  
- 3rd Qu.:1994               3rd Qu.:59.1      3rd Qu.:2866  
- Max.   :2001               Max.   :98.7      Max.   :4406  
-                            NA's   :2         NA's   :4     
+      Year         season    consumption  
+ Min.   :1973   Winter:29   Min.   :1335  
+ 1st Qu.:1980   Spring:29   1st Qu.:1725  
+ Median :1987   Summer:29   Median :2135  
+ Mean   :1987   Fall  :29   Mean   :2387  
+ 3rd Qu.:1994               3rd Qu.:2866  
+ Max.   :2001               Max.   :4406  
+                            NA's   :4     
 ```
 
 
@@ -653,7 +571,7 @@ plot_cons
 
 *** =right
 
-<img src="figure/unnamed-chunk-16.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" />
 
 
 ---  &my_twocol  w1:45% w2:55%
@@ -663,106 +581,125 @@ plot_cons
 
 ### Detrend data
 
-We want to remove the time-trend effects to focus on the temperature-series effects
+We want to remove the time-trend effects for data after 1979.
 
 
 ```r
-after_1979 <- 
-  us_redti_clean$Year > 1979
-
 plot_cons + 
   geom_smooth(
-    aes(x=Year, y=consumption),
-    data=us_redti_clean[after_1979, ],
-    method="lm"
+    data = us_redti_clean[
+      us_redti_clean$Year > 1979, 
+    ],
+    method = "lm"
   )
 ```
 
 
 *** =right
 
-<img src="figure/unnamed-chunk-18.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
 
 
 ---  &my_twocol  w1:45% w2:55%
 ## Case Study: U.S. REDTI
 
-*** =left
-
-### Visualize data
-
-Look at tempterature index
+Focus on data for winter, after-1979
 
 
 ```r
-plot_temp <- qplot(
-  x = Year,
-  y = temperature_index,
-  color = season,
-  data = us_redti_clean
-) + facet_wrap(~ season)
+us_redti_later <- us_redti_clean[us_redti_clean$Year > 1979, ]
+us_redti_later_winter <- us_redti_later[us_redti_later$season == "Winter", ]
+
+model_time_winter <- lm(consumption ~ Year, data = us_redti_later_winter)
+coef(summary(model_time_winter))
+```
+
+```
+             Estimate Std. Error t value  Pr(>|t|)
+(Intercept) -56817.64  12327.119  -4.609 1.697e-04
+Year            30.38      6.193   4.906 8.531e-05
 ```
 
 
+---  &my_twocol  w1:55% w2:45%
+## Case Study: U.S. REDTI
+
+Let's create a new data frame using de-trended consumption
+
+*** =left
+
 
 ```r
-plot_temp
+consumption_baseline <- 
+  predict(model_time_winter, 
+          newdata=data.frame(Year = 1980))
+
+consumption_baseline
+```
+
+```
+   1 
+3341 
+```
+
+```r
+us_redti_later_winter_dt <- mutate(
+  us_redti_later_winter,
+  detrended = TRUE,
+  consumption = consumption_baseline +
+    resid(model_time_winter) 
+)
 ```
 
 
 *** =right
 
-<img src="figure/unnamed-chunk-21.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" style="display: block; margin: auto;" />
+
+```r
+head(us_redti_later_winter_dt)
+```
+
+```
+   Year season consumption detrended
+8  1980 Winter        3472      TRUE
+9  1981 Winter        3600      TRUE
+10 1982 Winter        3476      TRUE
+11 1983 Winter        3194      TRUE
+12 1984 Winter        3317      TRUE
+13 1985 Winter        3313      TRUE
+```
 
 
----
+---  &my_twocol  w1:45% w2:55%
 ## Case Study: U.S. REDTI
 
-### Model data
+Let's create a new data frame using de-trended consumption
 
-* Let's look at winter
-
-* We are not using the "detrended" data discussed at the website
-
-* This model is only to demonstrate the `lm()` function
+*** =left
 
 
 ```r
-season_spring <- us_redti_clean$season == "Spring"
+us_redti_later_winter$detrended <- FALSE
+us_redti_combined <- rbind(
+  us_redti_later_winter,
+  us_redti_later_winter_dt
+)
 
-model <- lm(consumption ~ temperature_index, 
-            data = us_redti_clean[after_1979 & season_spring, ])
+plot_detrend <- 
+  qplot(
+    x = Year,
+    y = consumption,
+    color = detrended,
+    data = us_redti_combined,
+    geom = "point"
+  ) + 
+  geom_smooth(method="lm")
 ```
 
 
----
-## Case Study: U.S. REDTI
+*** =right
 
-
-```
-
-Call:
-lm(formula = consumption ~ temperature_index, data = us_redti_clean[after_1979 & 
-    season_spring, ])
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--214.0  -63.9  -13.3   81.3  184.1 
-
-Coefficients:
-                  Estimate Std. Error t value Pr(>|t|)    
-(Intercept)        2142.79      73.36   29.21   <2e-16 ***
-temperature_index     4.04       1.35    3.01   0.0072 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 120 on 19 degrees of freedom
-  (1 observation deleted due to missingness)
-Multiple R-squared:  0.322,	Adjusted R-squared:  0.287 
-F-statistic: 9.04 on 1 and 19 DF,  p-value: 0.00725
-```
-
-
+<img src="figure/unnamed-chunk-19.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" style="display: block; margin: auto;" />
 
 
 --- &my_twocol  w1:33% w2:65%
