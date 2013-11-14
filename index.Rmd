@@ -49,7 +49,7 @@ Warning:
 
 I want to show as many features as I can in an hour.
 
-An hour, even a week, is not enough time for thoughful discussion, demonstration, and practice.  
+An hour, even a week, is not enough time for thoughtful discussion, demonstration, and practice.  
 
 I have tried to leave links to other references, so that you may learn at your pace.
 
@@ -219,7 +219,7 @@ Here's a subjective list of "essential" packages to be installed:
 
 One consequence of user-contributed packages is a lack of consistency in interface.
 
-Hadley Wickham's contribution is a set of useful packges that are well-written, well-documented, and well-consistent.
+Hadley Wickham's contribution is a set of useful packages that are well-written, well-documented, and well-consistent.
 
 ---
 ## Package Installation
@@ -238,7 +238,7 @@ require("plyr", quietly=TRUE)
 require("ggplot2", quietly=TRUE)
 ```
 
-`require()` and `library()` are used interchangably.
+`require()` and `library()` are used interchangeably.
 
 Using RStudio IDE: Andrew Jahn  <i class="fa fa-youtube"></i>
 [Installing Packages in R Studio](http://youtu.be/u1r5XTqrCTQ) 
@@ -408,7 +408,7 @@ us_redti_clean <- mutate(
 summary(us_redti_clean)
 ```
 
----  &my_twocol  w1:45% w2:55%
+---  &my_twocol  w1:55% w2:45%
 ## Case Study: U.S. REDTI
 
 *** =left
@@ -436,7 +436,7 @@ plot_cons
 plot_cons
 ```
 
----  &my_twocol  w1:45% w2:55%
+---  &my_twocol  w1:55% w2:45%
 ## Case Study: U.S. REDTI
 
 *** =left
@@ -446,16 +446,16 @@ plot_cons
 We want to remove the time-trend effects for data after 1979.
 
 ```{r, eval=FALSE}
-index_later <-     # identify indices
+index_later <-     # identify observations
   us_redti_clean$Year > 1979
 
-us_redti_later <-  # subset on indices
+us_redti_later <-  # subset on observations
   us_redti_clean[index_later, ]
 
-plot_cons +        # add to plot
-  geom_smooth(
-    data = us_redti_later,
-    method = "lm"
+plot_cons +                 # add to plot
+  geom_smooth(              # a smoothing geometry
+    data = us_redti_later,  # using subset data
+    method = "lm"           # and a linear model
   )
 ```
 
@@ -472,6 +472,7 @@ plot_cons +
   )
 ```
 
+---
 ## Case Study: U.S. REDTI
 
 ### Detrend data
@@ -497,7 +498,7 @@ coef(summary(model_time_winter)) # summary() gives more info; we want just coeff
 
 ### Detrend data
 
-Use `predict()` to establish baseline at 1980.
+Use `predict()` to establish baseline at 1980
 
 ```{r}
 consumption_baseline <- 
@@ -511,9 +512,11 @@ consumption_baseline
 
 ### Detrend data
 
-Use `resid()`
+Use `resid()` to get difference between data and model
 
 Use `mutate()` to create detrended data frame
+
+Create new variable, `detrended`, to denote if observation is detrended
 
 ```{r}
 us_redti_later_winter_dt <- mutate(
@@ -590,7 +593,9 @@ plot_detrend <-
 
 * visualization using `ggplot2`
 
-* interacivity using `rCharts`
+* interactivity using `rCharts`
+
+Purpose is to show different ways of visualizing same data.
 
 *** =right
 
@@ -811,16 +816,16 @@ sankeyPlot
 | GoogleDeveloplers <i class="fa fa-youtube"></i>  [Introduction to R](http://www.youtube.com/playlist?list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP) | Great set of short videos introducing the basics |
 |  Norman Matloff <i class="fa fa-book"></i> [The Art of R Programming](http://amzn.com/1593273843)| Solid tutorial introduction |
 | Garrett Grolemund  <i class="fa fa-book"></i> [Data Analysis with R](http://amzn.com/1449359019)  | Incorporates Hadley packages `plyr`, `ggplot2`. Avail. June 2014|
-|  Hadley Wickham <i class="fa fa-vimeo-square"></i> [Tidy Data](http://vimeo.com/33727555)  <i class="fa fa-link"></i> [Paper](http://vita.had.co.nz/papers/tidy-data.pdf) | Essential work on how organizing data (even for non-R people) <i class="fa fa-coffee"></i> |
+|  Hadley Wickham <i class="fa fa-vimeo-square"></i> [Tidy Data](http://vimeo.com/33727555)  <i class="fa fa-link"></i> [Paper](http://vita.had.co.nz/papers/tidy-data.pdf) | Essential work on organizing data (even for non-R people) <i class="fa fa-coffee"></i> |
 
 <br/>
 
 | Advanced         |            |
 |----------|------------|
-| Yihui Xie  <i class="fa fa-link"></i> [knitr](http://yihui.name/knitr/) | Reporoducible research: dynamic report generation
+| Yihui Xie  <i class="fa fa-link"></i> [knitr](http://yihui.name/knitr/) | Reproducible research: dynamic report generation
 |  Ramnath Vaidyanathan <i class="fa fa-github"></i>  [slidify](http://slidify.org/) | Create html5 presentations, blog posts using R |
 | Ramnath Vaidyanathan  <i class="fa fa-github"></i> [rCharts](http://ramnathv.github.io/rCharts/) | Create `d3.js` charts using R |
-|  Rstudio <i class="fa fa-link"></i> [shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
+|  RStudio <i class="fa fa-link"></i> [shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
 |  Hadley Wickham <i class="fa fa-link"></i> [Advanced R](http://adv-r.had.co.nz/) | Learn what's behind the curtain  |
 
 

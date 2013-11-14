@@ -82,7 +82,7 @@
 
 <p>I want to show as many features as I can in an hour.</p>
 
-<p>An hour, even a week, is not enough time for thoughful discussion, demonstration, and practice.  </p>
+<p>An hour, even a week, is not enough time for thoughtful discussion, demonstration, and practice.  </p>
 
 <p>I have tried to leave links to other references, so that you may learn at your pace.</p>
 
@@ -370,7 +370,7 @@ a
 
 <p>One consequence of user-contributed packages is a lack of consistency in interface.</p>
 
-<p>Hadley Wickham&#39;s contribution is a set of useful packges that are well-written, well-documented, and well-consistent.</p>
+<p>Hadley Wickham&#39;s contribution is a set of useful packages that are well-written, well-documented, and well-consistent.</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -395,7 +395,7 @@ require(&quot;plyr&quot;, quietly=TRUE)
 require(&quot;ggplot2&quot;, quietly=TRUE)
 </code></pre>
 
-<p><code>require()</code> and <code>library()</code> are used interchangably.</p>
+<p><code>require()</code> and <code>library()</code> are used interchangeably.</p>
 
 <p>Using RStudio IDE: Andrew Jahn  <i class="fa fa-youtube"></i>
 <a href="http://youtu.be/u1r5XTqrCTQ">Installing Packages in R Studio</a> </p>
@@ -684,7 +684,7 @@ Preview:
   </hgroup>
   <article data-timings="">
     
-<div class='left' style='float:left;width:45%'>
+<div class='left' style='float:left;width:55%'>
  <h3>Visualize data</h3>
 
 <p><code>qplot()</code> from <code>ggplot2</code> package</p>
@@ -701,7 +701,7 @@ Preview:
 </code></pre>
 
 </div>
-<div class='right' style='float:right;width:55%'>
+<div class='right' style='float:right;width:45%'>
  <p><img src="figure/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" /></p>
 
 </div>
@@ -718,31 +718,42 @@ Preview:
   </hgroup>
   <article data-timings="">
     
-<div class='left' style='float:left;width:45%'>
+<div class='left' style='float:left;width:55%'>
  <h3>Detrend data</h3>
 
 <p>We want to remove the time-trend effects for data after 1979.</p>
 
-<pre><code class="r">index_later &lt;-     # identify indices
+<pre><code class="r">index_later &lt;-     # identify observations
   us_redti_clean$Year &gt; 1979
 
-us_redti_later &lt;-  # subset on indices
+us_redti_later &lt;-  # subset on observations
   us_redti_clean[index_later, ]
 
-plot_cons +        # add to plot
-  geom_smooth(
-    data = us_redti_later,
-    method = &quot;lm&quot;
+plot_cons +                 # add to plot
+  geom_smooth(              # a smoothing geometry
+    data = us_redti_later,  # using subset data
+    method = &quot;lm&quot;           # and a linear model
   )
 </code></pre>
 
 </div>
-<div class='right' style='float:right;width:55%'>
+<div class='right' style='float:right;width:45%'>
  <p><img src="figure/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" /></p>
 
-<h2>Case Study: U.S. REDTI</h2>
+</div>
+<div class='foot' style='float:left;width:100%'>
+ 
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h3>Detrend data</h3>
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Case Study: U.S. REDTI</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Detrend data</h3>
 
 <p>Although we can do this more generally, we will demonstrate by subsetting on winter</p>
 
@@ -763,22 +774,18 @@ coef(summary(model_time_winter)) # summary() gives more info; we want just coeff
 Year            30.38      6.193   4.906 8.531e-05
 </code></pre>
 
-</div>
-<div class='foot' style='float:left;width:100%'>
- 
-</div>
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-20" style="background:;">
+<slide class="" id="slide-21" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
   <article data-timings="">
     <h3>Detrend data</h3>
 
-<p>Use <code>predict()</code> to establish baseline at 1980.</p>
+<p>Use <code>predict()</code> to establish baseline at 1980</p>
 
 <pre><code class="r">consumption_baseline &lt;- 
   predict(model_time_winter, newdata=data.frame(Year = 1980))
@@ -794,16 +801,18 @@ consumption_baseline
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-21" style="background:;">
+<slide class="" id="slide-22" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
   <article data-timings="">
     <h3>Detrend data</h3>
 
-<p>Use <code>resid()</code></p>
+<p>Use <code>resid()</code> to get difference between data and model</p>
 
 <p>Use <code>mutate()</code> to create detrended data frame</p>
+
+<p>Create new variable, <code>detrended</code>, to denote if observation is detrended</p>
 
 <pre><code class="r">us_redti_later_winter_dt &lt;- mutate(
   us_redti_later_winter,
@@ -818,7 +827,7 @@ us_redti_later_winter$detrended &lt;- FALSE
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-22" style="background:;">
+<slide class="" id="slide-23" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
@@ -862,7 +871,7 @@ us_redti_later_winter$detrended &lt;- FALSE
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-23" style="background:;">
+<slide class="" id="slide-24" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. REDTI</h2>
   </hgroup>
@@ -900,7 +909,7 @@ plot_detrend &lt;-
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-24" style="background:;">
+<slide class="" id="slide-25" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -913,8 +922,10 @@ plot_detrend &lt;-
 <li><p>import using <code>read.csv()</code></p></li>
 <li><p>aggregation using <code>plyr</code></p></li>
 <li><p>visualization using <code>ggplot2</code></p></li>
-<li><p>interacivity using <code>rCharts</code></p></li>
+<li><p>interactivity using <code>rCharts</code></p></li>
 </ul>
+
+<p>Purpose is to show different ways of visualizing same data.</p>
 
 </div>
 <div class='right' style='float:right;width:65%'>
@@ -929,7 +940,7 @@ plot_detrend &lt;-
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-25" style="background:;">
+<slide class="" id="slide-26" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -957,7 +968,7 @@ library(rCharts, quietly=TRUE)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-26" style="background:;">
+<slide class="" id="slide-27" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -984,7 +995,7 @@ library(rCharts, quietly=TRUE)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-27" style="background:;">
+<slide class="" id="slide-28" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1013,7 +1024,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-28" style="background:;">
+<slide class="" id="slide-29" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1041,7 +1052,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-29" style="background:;">
+<slide class="" id="slide-30" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1074,7 +1085,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-30" style="background:;">
+<slide class="" id="slide-31" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1108,7 +1119,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-31" style="background:;">
+<slide class="" id="slide-32" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1142,7 +1153,7 @@ us_energy_by_source_2012
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-32" style="background:;">
+<slide class="" id="slide-33" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1167,7 +1178,7 @@ n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-33" style="background:;">
+<slide class="" id="slide-34" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1192,7 +1203,7 @@ n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-34" style="background:;">
+<slide class="" id="slide-35" style="background:;">
   <hgroup>
     <h2>Case Study: U.S. Energy 2012</h2>
   </hgroup>
@@ -1231,7 +1242,7 @@ sankeyPlot$set(
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-35" style="background:;">
+<slide class="" id="slide-36" style="background:;">
   <hgroup>
     <h2>Further Learning</h2>
   </hgroup>
@@ -1260,7 +1271,7 @@ sankeyPlot$set(
 </tr>
 <tr>
 <td>Hadley Wickham <i class="fa fa-vimeo-square"></i> <a href="http://vimeo.com/33727555">Tidy Data</a>  <i class="fa fa-link"></i> <a href="http://vita.had.co.nz/papers/tidy-data.pdf">Paper</a></td>
-<td>Essential work on how organizing data (even for non-R people) <i class="fa fa-coffee"></i></td>
+<td>Essential work on organizing data (even for non-R people) <i class="fa fa-coffee"></i></td>
 </tr>
 </tbody></table>
 
@@ -1274,7 +1285,7 @@ sankeyPlot$set(
 </thead><tbody>
 <tr>
 <td>Yihui Xie  <i class="fa fa-link"></i> <a href="http://yihui.name/knitr/">knitr</a></td>
-<td>Reporoducible research: dynamic report generation</td>
+<td>Reproducible research: dynamic report generation</td>
 </tr>
 <tr>
 <td>Ramnath Vaidyanathan <i class="fa fa-github"></i>  <a href="http://slidify.org/">slidify</a></td>
@@ -1285,7 +1296,7 @@ sankeyPlot$set(
 <td>Create <code>d3.js</code> charts using R</td>
 </tr>
 <tr>
-<td>Rstudio <i class="fa fa-link"></i> <a href="http://www.rstudio.com/shiny/">shiny</a></td>
+<td>RStudio <i class="fa fa-link"></i> <a href="http://www.rstudio.com/shiny/">shiny</a></td>
 <td>Create interactive web-applications using R</td>
 </tr>
 <tr>
@@ -1445,7 +1456,7 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=24 title='Case Study: U.S. Energy 2012'>
+        data-slide=24 title='Case Study: U.S. REDTI'>
          24
       </a>
     </li>
@@ -1511,8 +1522,14 @@ sankeyPlot$set(
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=35 title='Further Learning'>
+        data-slide=35 title='Case Study: U.S. Energy 2012'>
          35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Further Learning'>
+         36
       </a>
     </li>
   </ul>
