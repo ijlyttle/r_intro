@@ -291,9 +291,9 @@ Hadley Wickham's contribution is a set of useful packges that are well-written, 
 To install a package, you can use the command-line:
 
 ```r
-#install_packages("reshape2")
-#install_packages("plyr")
-#install_packages("ggplot2")
+install_packages("reshape2")
+install_packages("plyr")
+install_packages("ggplot2")
 ```
 
 To load a package:
@@ -310,35 +310,32 @@ require("ggplot2", quietly=TRUE)
 Using RStudio IDE: Andrew Jahn  <i class="fa fa-youtube"></i>
 [Installing Packages in R Studio](http://youtu.be/u1r5XTqrCTQ) 
 
---- &my_twocol  w1:33% w2:65%
+--- &my_twocol  w1:40% w2:60%
 ## Case Study: U.S. REDTI
 
 ### Residential Energy Demand Temperature Index
 
 *** =left
 
-Demonstration of:
-
 * import using `read.csv()`
 
-* tidy data
-
-* use of functions to clean data
+* functions to tidy and clean data
 
 * subsetting
 
 * visualization using `ggplot2`
 
-* modeling using `lm()`
+* model using `lm()`
 
-* prediction using `predict()`, `resid()`
-
+* predict using `predict()`, `resid()`
 
 *** =right
 
 <img src="figure/us_redti_spring.jpg", width="85%"/>
 
 *** =foot
+
+Purpose is to highlight the some steps in an analysis, not to show a complete analysis
 
 <i class="fa fa-link"></i> [U.S. National Climatic Data Center](http://www.ncdc.noaa.gov/societal-impacts/redti/)
 
@@ -347,14 +344,18 @@ Demonstration of:
 
 ### Import the data
 
+Install these packages first, using `install.packages()`, if you don't have them.
 
 ```r
-# install these packages, if you don't have them
 library(reshape2, quietly=TRUE)
 library(plyr, quietly=TRUE)
 library(ggplot2, quietly=TRUE)
+```
 
-# read this csv files; parse into data frame
+
+Read csv file, parse into data frame
+
+```r
 us_redti_raw <- 
   read.csv("http://ijlyttle.github.io/r_intro/data/us_redti_consumption.csv")
 ```
@@ -364,7 +365,7 @@ us_redti_raw <-
 Preview: 
 <i class="fa fa-link"></i> [us_redti_consumption.csv](https://github.com/ijlyttle/r_intro/blob/master/data/us_redti_consumption.csv) 
 
----  &my_twocol  w1:50% w2:50%
+---  &my_twocol  w1:60% w2:40%
 ## Case Study: U.S. REDTI
 
 *** =left
@@ -405,10 +406,10 @@ This is <b>not</b> tidy data.
 Hadley Wickham <i class="fa fa-vimeo-square"></i> [Tidy Data](http://vimeo.com/33727555)  <i class="fa fa-link"></i> [Paper](http://vita.had.co.nz/papers/tidy-data.pdf)
 
 
----  &my_twocol  w1:50% w2:50%
+---  &my_twocol  w1:65% w2:35%
 ## Case Study: U.S. REDTI
 
-### Tidy the data
+### Tidy data
 
 `reshape2` provides some tidying tools, such as the `melt()` function.
 
@@ -417,16 +418,15 @@ Hadley Wickham <i class="fa fa-vimeo-square"></i> [Tidy Data](http://vimeo.com/3
 
 ```r
 us_redti_tidy <- melt(
-  us_redti_raw, 
-  id.vars = "Year",
-  variable.name = "season",
-  value.name = "consumption"
+  us_redti_raw,              # input data frame 
+  id.vars = "Year",          # vars *not* to be melted
+  variable.name = "season",  # column for melted var-names
+  value.name = "consumption" # column for melted values  
 )
 ```
 
 
 *** =right
-
 
 ```r
 head(us_redti_tidy)
@@ -442,6 +442,9 @@ head(us_redti_tidy)
 6 1978 Winter     3953.53
 ```
 
+
+*** =foot
+The function `dcast()` is used to reverse the process.
 
 ---  &my_twocol  w1:50% w2:50%
 ## Case Study: U.S. REDTI
@@ -476,7 +479,7 @@ str(us_redti_tidy)        # Can also use RStudio GUI
 ---  &my_twocol  w1:50% w2:50%
 ## Case Study: U.S. REDTI
 
-### Clean the data
+### Clean data
 
 In our dataset, `-99.99` denotes missing data. In R, `NA` is used for this purpose.
 
@@ -485,8 +488,8 @@ Let's use a function to fix the "missing" values. This one was written by Hadley
 
 ```r
 fix_missing <- function(x, na.value) {
-  x[x == na.value] <- NA
-  x
+  x[x == na.value] <- NA                # for those values of x equal to na.value,
+  x                                     # replace the value with NA                                   
 } 
 ```
 
@@ -501,25 +504,23 @@ Hadley Wickham <i class="fa fa-link"></i>
 [Advanced R: Functional Programming](http://adv-r.had.co.nz/Functional-programming.html)
 
 
----  &my_twocol  w1:35% w2:65%
+---  &my_twocol  w1:50% w2:50%
 ## Case Study: U.S. REDTI
 
-### Clean the data
+### Clean data
 
 The `mutate()` function from the `plyr` package is useful.
+
+Mutate a data frame by adding new or replacing existing columns
 
 *** =left
 
 
 ```r
-na.value <- -99.99
 us_redti_clean <- mutate(
   us_redti_tidy,
   consumption = 
-    fix_missing(
-      consumption, 
-      -99.99
-    )
+    fix_missing(consumption,  -99.99)
 )
 ```
 
@@ -571,7 +572,7 @@ plot_cons
 
 *** =right
 
-<img src="figure/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-13.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" />
 
 
 ---  &my_twocol  w1:45% w2:55%
@@ -585,11 +586,15 @@ We want to remove the time-trend effects for data after 1979.
 
 
 ```r
-plot_cons + 
+index_later <-     # identify indices
+  us_redti_clean$Year > 1979
+
+us_redti_later <-  # subset on indices
+  us_redti_clean[index_later, ]
+
+plot_cons +        # add to plot
   geom_smooth(
-    data = us_redti_clean[
-      us_redti_clean$Year > 1979, 
-    ],
+    data = us_redti_later,
     method = "lm"
   )
 ```
@@ -597,21 +602,30 @@ plot_cons +
 
 *** =right
 
-<img src="figure/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-15.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
 
 
----  &my_twocol  w1:45% w2:55%
 ## Case Study: U.S. REDTI
 
-Focus on data for winter, after-1979
+### Detrend data
+
+Although we can do this more generally, we will demonstrate by subsetting on winter
 
 
 ```r
-us_redti_later <- us_redti_clean[us_redti_clean$Year > 1979, ]
 us_redti_later_winter <- us_redti_later[us_redti_later$season == "Winter", ]
+```
 
-model_time_winter <- lm(consumption ~ Year, data = us_redti_later_winter)
-coef(summary(model_time_winter))
+
+The `lm()` function returns a linear model.
+
+
+```r
+model_time_winter <- lm(
+  consumption ~ Year,            # independent variable ~ dependent variable(s), "1" implied
+  data = us_redti_later_winter   # man page is very useful
+)
+coef(summary(model_time_winter)) # summary() gives more info; we want just coefficients for now
 ```
 
 ```
@@ -621,18 +635,17 @@ Year            30.38      6.193   4.906 8.531e-05
 ```
 
 
----  &my_twocol  w1:55% w2:45%
+---
 ## Case Study: U.S. REDTI
 
-Let's create a new data frame using de-trended consumption
+### Detrend data
 
-*** =left
+Use `predict()` to establish baseline at 1980.
 
 
 ```r
 consumption_baseline <- 
-  predict(model_time_winter, 
-          newdata=data.frame(Year = 1980))
+  predict(model_time_winter, newdata=data.frame(Year = 1980))
 
 consumption_baseline
 ```
@@ -642,13 +655,50 @@ consumption_baseline
 3341 
 ```
 
+
+---
+## Case Study: U.S. REDTI
+
+### Detrend data
+
+Use `resid()`
+
+Use `mutate()` to create detrended data frame
+
+
 ```r
 us_redti_later_winter_dt <- mutate(
   us_redti_later_winter,
   detrended = TRUE,
-  consumption = consumption_baseline +
-    resid(model_time_winter) 
+  consumption = consumption_baseline + resid(model_time_winter) 
 )
+
+us_redti_later_winter$detrended <- FALSE
+```
+
+
+---  &my_twocol  w1:50% w2:50%
+## Case Study: U.S. REDTI
+
+### Detrend data
+
+Compare original and detrended data-frames
+
+*** =left
+
+
+```r
+head(us_redti_later_winter)
+```
+
+```
+   Year season consumption detrended
+8  1980 Winter        3472     FALSE
+9  1981 Winter        3630     FALSE
+10 1982 Winter        3536     FALSE
+11 1983 Winter        3285     FALSE
+12 1984 Winter        3438     FALSE
+13 1985 Winter        3465     FALSE
 ```
 
 
@@ -670,16 +720,18 @@ head(us_redti_later_winter_dt)
 ```
 
 
----  &my_twocol  w1:45% w2:55%
-## Case Study: U.S. REDTI
 
-Let's create a new data frame using de-trended consumption
+
+---  &my_twocol  w1:50% w2:50%
+## Case Study: U.S. REDTI
 
 *** =left
 
+### Detrend data
+
 
 ```r
-us_redti_later_winter$detrended <- FALSE
+# combine data frames by binding rows
 us_redti_combined <- rbind(
   us_redti_later_winter,
   us_redti_later_winter_dt
@@ -699,7 +751,7 @@ plot_detrend <-
 
 *** =right
 
-<img src="figure/unnamed-chunk-19.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" style="display: block; margin: auto;" />
+<img src="figure/unnamed-chunk-23.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" style="display: block; margin: auto;" />
 
 
 --- &my_twocol  w1:33% w2:65%
@@ -707,7 +759,7 @@ plot_detrend <-
 
 *** =left
 
-Demonstration of:
+### Demonstration
 
 * import using `read.csv()`
 
@@ -742,9 +794,9 @@ us_energy_2012 <- read.csv("http://ijlyttle.github.io/r_intro/data/us_energy_201
 
 ```r
 # advanced
-#install.packages(devtools)
+install.packages(devtools)
 library(devtools, quietly=TRUE) # requires RTools from CRAN 
-#install_github(repo="rCharts", username="ramnathv", ref="dev")
+install_github(repo="rCharts", username="ramnathv", ref="dev")
 library(rCharts, quietly=TRUE)
 ```
 
@@ -836,7 +888,7 @@ us_energy_by_source_2012
 
 *** =left
 
-Stacked bar plot:
+### Stacked bar plot
 
 ```r
 plot_1 <- qplot(
@@ -862,7 +914,7 @@ plot_1 <- qplot(
 
 *** =left
 
-Dodged bar plot:
+### Dodged bar plot
 
 ```r
 plot_2 <- qplot(
@@ -889,7 +941,7 @@ plot_2 <- qplot(
 
 *** =left
 
-Faceted bar plot:
+### Faceted bar plot
 
 ```r
 plot_3 <- qplot(
