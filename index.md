@@ -220,7 +220,7 @@ a$title
 GoogleDeveloplers <i class="fa fa-youtube"></i> 
 [Lists](http://youtu.be/UffunYeERV0)
 
---- &my_twocol  w1:33% w2:65%
+--- &my_twocol  w1:40% w2:55%
 ## Data Frames
 
 *** =left
