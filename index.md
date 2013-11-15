@@ -1033,6 +1033,7 @@ sankeyPlot$set(
 |----------|------------|
 | Hadley Wickham <i class="fa fa-youtube"></i> [Google Tech Talk](http://youtu.be/TaxJwC_MP9Q) | Use of programming languages for data analysis <i class="fa fa-coffee"></i> |
 | GoogleDeveloplers <i class="fa fa-youtube"></i>  [Introduction to R](http://www.youtube.com/playlist?list=PLOU2XLYxmsIK9qQfztXeybpHvru-TrqAP) | Great set of short videos introducing the basics |
+| Computerworld <i class="fa fa-link"></i> [Beginner's Guide to R](http://www.computerworld.com/s/article/9239625/Beginner_s_guide_to_R_Introduction)| Nice walktrough of base R for non-programmers  |
 |  Norman Matloff <i class="fa fa-book"></i> [The Art of R Programming](http://amzn.com/1593273843)| Solid tutorial introduction |
 | Garrett Grolemund  <i class="fa fa-book"></i> [Data Analysis with R](http://amzn.com/1449359019)  | Incorporates Hadley packages `plyr`, `ggplot2`. Avail. June 2014|
 |  Hadley Wickham <i class="fa fa-vimeo-square"></i> [Tidy Data](http://vimeo.com/33727555)  <i class="fa fa-link"></i> [Paper](http://vita.had.co.nz/papers/tidy-data.pdf) | Essential work on organizing data (even for non-R people) <i class="fa fa-coffee"></i> |
@@ -1047,7 +1048,4 @@ sankeyPlot$set(
 |  RStudio <i class="fa fa-link"></i> [shiny](http://www.rstudio.com/shiny/) | Create interactive web-applications using R |
 |  Hadley Wickham <i class="fa fa-link"></i> [Advanced R](http://adv-r.had.co.nz/) | Learn what's behind the curtain  |
 
-
-
-<br/>
 <i class="fa fa-coffee"></i> - longer video
