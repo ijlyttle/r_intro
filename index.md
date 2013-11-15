@@ -335,7 +335,7 @@ Using RStudio IDE: Andrew Jahn  <i class="fa fa-youtube"></i>
 
 *** =foot
 
-Purpose is to highlight the some steps in an analysis, not to show a complete analysis
+Purpose is to highlight some steps in an analysis, not to show a complete analysis
 
 <i class="fa fa-link"></i> [U.S. National Climatic Data Center](http://www.ncdc.noaa.gov/societal-impacts/redti/)
 
