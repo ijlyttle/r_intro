@@ -1,6 +1,6 @@
 ---
 title       : Introduction to R & RStudio
-subtitle    : 
+subtitle    : http://ijlyttle.github.io/r_intro
 author      : Ian Lyttle
 job         : Analytics for Solutions, Schneider Electric
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
