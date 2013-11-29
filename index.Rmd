@@ -2,7 +2,7 @@
 title       : Introduction to R & RStudio
 subtitle    : http://ijlyttle.github.io/r_intro
 author      : Ian Lyttle
-job         : Analytics for Solutions, Schneider Electric
+job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
@@ -81,7 +81,9 @@ Some helpful videos from Amanda Traud:
 * <i class="fa fa-youtube"></i> [Installing R](http://youtu.be/X_oFb2iAdu8)
 * <i class="fa fa-youtube"></i> [Installing RStudio](http://youtu.be/AZPbg29Plpw)
 
+### Alternative (kind of)
 
+<i class="fa fa-link"></i> http://r-fiddle.org - try a little R coding - no installation - runs on your browser 
 
 --- &my_twocol  w1:33% w2:65%
 ## Tour of RStudio IDE
