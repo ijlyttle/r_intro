@@ -20,7 +20,7 @@ library(slidify)
 opts_chunk$set(comment=NA, tidy=FALSE, fig.align="center", dev="png", fig.height=7.25)
 ```
 
-There are other options for open-source data analysis: Octave, Python, and Rapid Miner (GUI).
+Other options for open-source data analysis: SciLab, Octave, Python, and Rapid Miner (GUI).
 
 This presentation focuses on R and RStudio:
 
@@ -38,6 +38,7 @@ Warning:
 
 * does not lend itself to an introductory presentation
 
+<i class="fa fa-link"></i> [SciLab](http://www.scilab.org)
 <i class="fa fa-link"></i> [Octave](http://www.gnu.org/software/octave/)
 <i class="fa fa-link"></i> [Python](http://www.python.org/)
 <i class="fa fa-link"></i> [Rapid Miner](http://rapidminer.com/) 

@@ -17,7 +17,7 @@ assets:
 
 
 
-There are other options for open-source data analysis: Octave, Python, and Rapid Miner (GUI).
+Other options for open-source data analysis: SciLab, Octave, Python, and Rapid Miner (GUI).
 
 This presentation focuses on R and RStudio:
 
@@ -35,6 +35,7 @@ Warning:
 
 * does not lend itself to an introductory presentation
 
+<i class="fa fa-link"></i> [SciLab](http://www.scilab.org)
 <i class="fa fa-link"></i> [Octave](http://www.gnu.org/software/octave/)
 <i class="fa fa-link"></i> [Python](http://www.python.org/)
 <i class="fa fa-link"></i> [Rapid Miner](http://rapidminer.com/) 
@@ -78,7 +79,7 @@ Some helpful videos from Amanda Traud:
 * <i class="fa fa-youtube"></i> [Installing R](http://youtu.be/X_oFb2iAdu8)
 * <i class="fa fa-youtube"></i> [Installing RStudio](http://youtu.be/AZPbg29Plpw)
 
-### Alternative
+### Alternative (kind of)
 
 <i class="fa fa-link"></i> http://r-fiddle.org - try a little R coding - no installation - runs on your browser 
 
