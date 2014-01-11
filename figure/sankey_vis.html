@@ -19,17 +19,17 @@
     
   </head>
   <body>
-    <div id='chart151475ea4ac0' class='rChart rCharts_d3_sankey'></div>  
+    <div id='charte1c56c82ff6' class='rChart rCharts_d3_sankey'></div>  
     
-    ﻿<!--Attribution:
+    <!--Attribution:
 Mike Bostock https://github.com/d3/d3-plugins/tree/master/sankey
 Mike Bostock http://bost.ocks.org/mike/sankey/
 -->
-
+ 
 <script>
 (function(){
 var params = {
- "dom": "chart151475ea4ac0",
+ "dom": "charte1c56c82ff6",
 "width":    375,
 "height":    475,
 "data": {
@@ -40,7 +40,9 @@ var params = {
 "layout":     32,
 "nodeWidth":     20,
 "nodePadding":      5,
-"id": "chart151475ea4ac0" 
+"labelFormat": "g3",
+"units": "quad",
+"id": "charte1c56c82ff6" 
 };
 
 params.units ? units = " " + params.units : units = "";
@@ -51,7 +53,7 @@ var formatNumber = d3.format("0,.0f"),    // zero decimal places
     color = d3.scale.category20();
 
 if(params.labelFormat){
-  formatNumber = d3.format(".2%");
+  formatNumber = d3.format(params.labelFormat);
 }
 
 var svg = d3.select('#' + params.id).append("svg")

@@ -1216,8 +1216,8 @@ n1$yAxis(axisLabel = &quot;consumption (quads)&quot;, width=45)
     
 <div class='left' style='float:left;width:60%'>
  <pre><code class="r"># Using `rCharts` to make a Sankey plot
-sankey_lib &lt;- 
-  &#39;http://timelyportfolio.github.io/rCharts_d3_sankey&#39;
+sankey_lib &lt;- # forked from timelyportfolio
+  &#39;http://ijlyttle.github.io/rCharts_d3_sankey&#39;
 sankeyPlot &lt;- rCharts$new()
 sankeyPlot$setLib(sankey_lib)
 sankeyPlot$set(
@@ -1229,7 +1229,8 @@ sankeyPlot$set(
   ),
   layout = 32,
   nodeWidth = 20, nodePadding = 5,
-  width = 375, height = 475
+  width = 375, height = 475,
+  labelFormat = &quot;g3&quot;, units = &quot;quad&quot;  
 )
 </code></pre>
 
